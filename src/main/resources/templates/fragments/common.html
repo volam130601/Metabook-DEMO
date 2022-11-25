@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:fragment="head-source">
+        <!-- Required meta tags -->
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+        <link href="/web/image/favicon.ico" rel="icon" type="image/x-icon">
+        <!-- Bootstrap CSS -->
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet"/>
+        <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+              integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+              referrerpolicy="no-referrer" rel="stylesheet"/>
+        <!-- CSS Style -->
+        <link href="../static/web/assets/css/style.css" th:href="@{/web/assets/css/style.css}" rel="stylesheet"/>
+        <link href="../static/web/assets/dist/jquery.toast.min.css" th:href="@{/web/assets/dist/jquery.toast.min.css}"
+              rel="stylesheet"/>
+    </th:block>
+</head>
+<body>
+
+
+<!-- Optional JavaScript -->
+<th:block th:fragment="js-source">
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script crossorigin="anonymous"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+    </script>
+    <script crossorigin="anonymous"
+            integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+            referrerpolicy="no-referrer"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
+    <!-- Custom Javascript -->
+    <script src="../static/web/assets/dist/jquery.toast.min.js"
+            th:src="@{/web/assets/dist/jquery.toast.min.js}"></script>
+    <script src="../static/web/assets/js/home.js" th:src="@{/web/assets/js/home.js}"></script>
+
+</th:block>
+</body>
+</html>

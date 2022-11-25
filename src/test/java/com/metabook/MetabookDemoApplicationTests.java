@@ -1,0 +1,13 @@
+package com.metabook;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class MetabookDemoApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Metabook</title>
+
+    <th:block th:replace="fragments/common :: head-source"></th:block>
+</head>
+
+<body class="bg-content">
+<nav class="navbar navbar-expand-sm navbar-white bg-white shadow-sm fixed-top">
+    <a class="" href="#">
+        <img alt="" src="image/metabook.png" width="40"/></a>
+    <div class="navbar-search mr-auto">
+        <i aria-hidden="true" class="fa fa-search search-icon"></i>
+        <input class="search-input" placeholder="Search in Metabook" type="text"/>
+    </div>
+    <div class="navbar-list mr-auto text-secondary">
+        <a class="navbar-page active m-2" data-placement="bottom" data-toggle="tooltip" title="Home">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <a class="navbar-page m-2" data-placement="bottom" data-toggle="tooltip" title="Friends">
+            <i class="fa-solid fa-user-friends"></i>
+        </a>
+        <a class="navbar-page m-2" data-placement="bottom" data-toggle="tooltip" title="Watch">
+            <i class="fa-brands fa-youtube"></i>
+        </a>
+    </div>
+    <div class="ml-auto">
+        <div class="d-flex justify-content-center align-items-center">
+            <a class="navbar-rigth-item">
+                <i class="fa-brands fa-facebook-messenger"></i>
+            </a>
+            <a class="navbar-rigth-item">
+                <i aria-hidden="true" class="fa fa-bell"></i>
+                <div class="bell-report">10+</div>
+            </a>
+            <div class="dropdown">
+                <img alt=""
+                     aria-expanded="false" aria-haspopup="true"
+                     class="dropdown-toggle" data-toggle="dropdown"
+                     id="dropdownMenuButton" th:src="@{/web/image/avatar_batman.png}" width="40">
+                <div aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-right mt-2 shadow-sm">
+                    <a class="dropdown-item" href="#">
+                        <i aria-hidden="true" class="fa fa-user mr-1 bg-grey p-2 rounded-circle"></i>
+                        My account
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fa-solid fa-gear mr-1 bg-grey p-2 rounded-circle"></i>
+                        Settings
+                    </a>
+                    <a class="dropdown-item " th:href="@{/logout}">
+                        <i class="fa-solid fa-right-from-bracket mr-1 bg-grey p-2 rounded-circle"></i>
+                        Log out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid bg-light">
+    <div class="row">
+        <div class="col">
+            <div class="fixed-left">
+                <div class="sidebar mt-3 sidebar-scrollbar">
+                    <div class="sidebar-item">
+                        <img alt=""
+                             class="sidebar-item__img" th:src="@{/web/image/avatar_batman.png}">
+                        <a class="sidebar-item__link" href="">Bat Man </a>
+                    </div>
+                    <div class="sidebar-item">
+                        <img alt=""
+                             class="sidebar-item__img" src="image/friends.png">
+                        <a class="sidebar-item__link" href="">Friends</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <img alt=""
+                             class="sidebar-item__img" src="image/group.png">
+                        <a class="sidebar-item__link" href="">Group</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <img alt=""
+                             class="sidebar-item__img" src="image/watch.png">
+                        <a class="sidebar-item__link" href="">Watch</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-6 mt-3 mb-5">
+            <div class="card content ">
+                <div class="card-header bg-white">
+                    <div class="navbar-list mr-auto text-secondary">
+                        <a class="navbar-page navbar-story active mr-2">
+                            <i class="fa-solid fa-book-open mr-1"></i>
+                            <span class="fs-4 font-weight-bold">News</span>
+                        </a>
+                        <a class="navbar-page navbar-story">
+                            <i class="fa-solid fa-video mr-1"></i>
+                            <span class="fs-4 font-weight-bold">Meet Room</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body d-flex ">
+                    <div class="slideshow">
+                        <div class="mySlides">
+                            <div class="story-create-info cursor-pointer">
+                                <img alt=""
+                                     class="story-create-info__img"
+                                     src="image/story/zoro.jpg">
+                                <span class="story-create-info__icon cursor-pointer"><i
+                                        aria-hidden="true" class="fa fa-plus cursor-pointer"></i></span>
+                                <span class="story-create-info__name cursor-pointer">Create Story</span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/poster/girl-xinh.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm123 </span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/story/zoro.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm 2312</span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/story/zoro.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm 2</span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/story/zoro.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm 1</span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/story/zoro.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm 3</span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/story/zoro.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm 2</span>
+                            </div>
+                        </div>
+                        <div class="mySlides">
+                            <div class="story-card">
+                                <img alt=""
+                                     class="story-card__img"
+                                     src="image/story/zoro.jpg">
+                                <img alt=""
+                                     class="story-avatar"
+                                     src="image/story/avatar_batman.png" width="40">
+                                <span class="story-name text-white ">Võ Lâm 32</span>
+                            </div>
+                        </div>
+                        <!-- Next and previous buttons -->
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card content mt-3">
+                <div class="create-post">
+                    <div class="d-flex mt-3 ml-3">
+                        <img alt=""
+                             th:src="@{/web/image/avatar_batman.png}" width="40">
+                        <input class="ml-3 mr-3 create-post__input" placeholder="What do you think?" type="text">
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-around align-items-center mb-2">
+                        <div class="d-flex align-items-center create-post__btn">
+                            <img alt=""
+                                 src="image/post/video_icon.png" width="30">
+                            <span class="ml-1 font-weight-bold fs-3">Video trực tiếp</span>
+                        </div>
+                        <div class="d-flex align-items-center create-post__btn">
+                            <img alt=""
+                                 src="image/post/picture_icon.png" width="30">
+                            <span class="ml-1 font-weight-bold fs-3">Ảnh/video</span>
+                        </div>
+                        <div class="d-flex align-items-center create-post__btn">
+                            <img alt=""
+                                 src="image/post/face_smile_icon.png" width="30">
+                            <span class="ml-1 font-weight-bold fs-3">Feeling/activity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Post One Image -->
+            <div class="card content mt-3">
+                <div class="card-header bg-white">
+                    <div class="d-flex align-items-center mb-2">
+                        <img alt=""
+                             th:src="@{/web/image/avatar_batman.png}" width="50">
+                        <div class="d-flex flex-column ml-2">
+                            <h6 class="m-0">Bat Man</h6>
+                            <span class="text-muted"><small>22 minutes</small> <b>&#xB7</b> <small><i
+                                    class="fa-solid fa-earth-americas"></i></small></span>
+                        </div>
+                        <i class="fa-solid fa-ellipsis ml-auto fs-6"></i>
+                    </div>
+                    <div class="post-content">Không để nó đẻ trứng</div>
+                </div>
+                <div class="post-image">
+                    <img alt=""
+                         height="500" src="image/post/luffy-gold.jpg" width="500">
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="d-flex align-items-center">
+                        <div class="post-like__icon">
+                            <img alt=""
+                                 src="image/like/happy_smiley_icon.png">
+                            <img alt=""
+                                 src="image/like/like_thumb_social_vote_favorite_icon.png">
+                            <img alt=""
+                                 src="image/like/bad_cry_crying_disappointed_face_icon.png">
+                        </div>
+                        <span class="text-muted ml-1">14K</span>
+                        <span class="text-muted ml-auto">1,4K comments</span>
+                        <span class="text-muted ml-2">274 shares</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-around align-items-center">
+                        <button class="btn-post fs-4 font-weight-bold text-meta" id="like-post-1"
+                                onclick="likePost(this)">
+                            <i class="fa-regular fa-thumbs-up d-none"></i>
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            <span>Like</span>
+                        </button>
+                        <button class="btn-post fs-4 font-weight-bold text-muted"
+                                onclick="showCommentBox('#comment-post-2')">
+                            <i class="fa-regular fa-comment"></i>
+                            <span>Comment</span>
+                        </button>
+                        <button class="btn-post fs-4 font-weight-bold text-muted">
+                            <i class="fa-solid fa-share"></i>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                    <!-- If comment null hr: d-none -->
+                    <div id="comment-post-2">
+                        <div class="text-center comment-spinner d-none">
+                            <hr>
+                            <div class="spinner-grow mt-2" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="w-100">
+                            <hr>
+                            <span class="d-flex justify-content-end align-items-center text-muted">
+                  <span class="font-weight-bold fs-3">Phù hợp nhất</span>
+                  <i class="fa-solid fa-caret-down ml-2"></i>
+                </span>
+                            <div class="comment-write d-flex align-content-center mt-2">
+                                <img class="h-40px"
+                                     th:src="@{/web/image/avatar_batman.png}">
+                                <input class="comment-input ml-2" placeholder="Enter comment..." type="text">
+                            </div>
+                            <div class="comment-box" id="comment-box-1">
+                                <div class="comment-read  d-flex mt-2">
+                                    <img class="h-40px"
+                                         th:src="@{/web/image/avatar_batman.png}">
+                                    <div class=" d-flex flex-column ml-2">
+                                        <div class="comment-detail  ">
+                                            <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
+                                            <div class="comment-content fs-3 ">What are anime name?</div>
+                                        </div>
+                                        <div class="d-flex align-items-center ml-2">
+                                            <button
+                                                    class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                Like
+                                            </button>
+                                            <button
+                                                    class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                Reply
+                                            </button>
+                                            <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
+                                        </div>
+                                    </div>
+                                    <div class="line-reply-under"></div>
+                                </div>
+                                <ul class="reply-comment-box ml-2">
+                                    <div class="reply-item text-muted">
+                                        <i class="fa-solid fa-share mt-2 ml-2"></i>
+                                        <button class="btn-reply mt-2 fs-3 font-weight-bold bg-transparent border-0 text-secondary"
+                                                onclick="showReply('#comment-box-1')">
+                                            3 Reply
+                                        </button>
+                                        <div class="line-corner"></div>
+                                    </div>
+                                    <li class="reply-item d-none">
+                                        <div class="comment-read d-flex mt-2">
+                                            <img class="comment-avatar h-35px"
+                                                 th:src="@{/web/image/avatar_batman.png}">
+                                            <div class=" d-flex flex-column ml-2">
+                                                <div class="comment-detail ">
+                                                    <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
+                                                    <div class="comment-content fs-3 ">Hello guys!</div>
+                                                </div>
+                                                <div class="d-flex align-items-center ml-2">
+                                                    <button
+                                                            class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                        Like
+                                                    </button>
+                                                    <button
+                                                            class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                        Reply
+                                                    </button>
+                                                    <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="line-vertical"></div>
+                                        <div class="line-corner"></div>
+                                    </li>
+                                    <li class="reply-item d-none">
+                                        <div class="comment-read d-flex mt-2">
+                                            <img class="comment-avatar h-35px"
+                                                 th:src="@{/web/image/avatar_batman.png}">
+                                            <div class=" d-flex flex-column ml-2">
+                                                <div class="comment-detail ">
+                                                    <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
+                                                    <div class="comment-content fs-3 ">Hello guysHello guysHello
+                                                        guysHello guysHello guysHello
+                                                        guysHello guysHello guysHello guysHello guysHello guysHello
+                                                        guysHello guysHello guysHello
+                                                        guys!
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center ml-2">
+                                                    <button
+                                                            class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                        Like
+                                                    </button>
+                                                    <button
+                                                            class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                        Reply
+                                                    </button>
+                                                    <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="line-vertical"></div>
+                                        <div class="line-corner"></div>
+                                    </li>
+                                    <li class="reply-item d-none">
+                                        <div class="comment-read d-flex mt-2">
+                                            <img class="comment-avatar h-35px"
+                                                 th:src="@{/web/image/avatar_batman.png}">
+                                            <div class=" d-flex flex-column ml-2">
+                                                <div class="comment-detail ">
+                                                    <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
+                                                    <div class="comment-content fs-3 ">Hello guysHello guysHello
+                                                        guysHello guysHello guysHello
+                                                        guysHello guysHello guysHello guysHello guysHello guysHello
+                                                        guysHello guysHello guysHello
+                                                        guys!
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-center ml-2">
+                                                    <button
+                                                            class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                        Like
+                                                    </button>
+                                                    <button
+                                                            class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
+                                                        Reply
+                                                    </button>
+                                                    <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="line-vertical d-none"></div>
+                                        <div class="line-corner"></div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Post Video -->
+            <!-- <div class="card content mt-3">
+              <div class="card-header bg-white">
+                <div class="d-flex align-items-center mb-2">
+                  <img th:src="@{/web/image/avatar_batman.png}" width="50" alt="">
+                  <div class="d-flex flex-column ml-2">
+                    <h6 class="m-0">Bat Man</h6>
+                    <span class="text-muted"><small>22 minutes</small> <b>&#xB7</b> <small><i
+                          class="fa-solid fa-earth-americas"></i></small></span>
+                  </div>
+                  <i class="fa-solid fa-ellipsis ml-auto fs-6"></i>
+                </div>
+                <div class="post-content">ẢNH KHÔNG CHE - FULL HD</div>
+              </div>
+              <div class="post-video">
+                <video onclick="play(event)"
+                  src="video/Rick Astley - Never Gonna Give You Up (Official Music Video).mkv" id="video"
+                  poster="image/poster/girl-xinh.jpg" controls></video>
+              </div>
+              <div class="card-footer bg-white">
+                <div class="d-flex align-items-center">
+                  <div class="post-like__icon">
+                    <img src="image/like/happy_smiley_icon.png" alt="">
+                    <img src="image/like/like_thumb_social_vote_favorite_icon.png" alt="">
+                    <img src="image/like/bad_cry_crying_disappointed_face_icon.png" alt="">
+                  </div>
+                  <span class="text-muted ml-1">14K</span>
+                  <span class="text-muted ml-auto">1,4K comments</span>
+                  <span class="text-muted ml-2">274 shares</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-around align-items-center">
+                  <button class="btn-post fs-4 font-weight-bold text-muted">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                    Like
+                  </button>
+                  <button class="btn-post fs-4 font-weight-bold text-muted">
+                    <i class="fa-regular fa-comment"></i>
+                    Comment
+                  </button>
+                  <button class="btn-post fs-4 font-weight-bold text-muted">
+                    <i class="fa-solid fa-share"></i>
+                    Share
+                  </button>
+                </div>
+              </div>
+            </div> -->
+        </div>
+
+        <div class="col">
+            <div class="fixed-right">
+                <div class="sidebar sidebar-right mt-3 sidebar-scrollbar">
+                    <div class="d-flex ml-2">
+                        <h6 class="mr-auto text-muted">Lời mời kết bạn</h6>
+                        <a class="text-meta">Xem tất cả</a>
+                    </div>
+                    <div class="sidebar-invitation">
+                        <img alt=""
+                             class="sidebar-invitation__img" th:src="@{/web/image/avatar_batman.png}">
+                        <div class="d-flex flex-column" style="width: 100%;">
+                            <div class="d-flex justify-content-around">
+                                <h6 class="mr-auto ml-3">Võ Lâm</h6>
+                                <em class="text-muted fs-2">19 hours</em>
+                            </div>
+                            <div class="d-flex">
+                                <button class="btn btn-meta ml-3 pl-4 pr-4 font-weight-bold">Accept</button>
+                                <button class="btn btn-secondary ml-3 pl-4 pr-4 font-weight-bold">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex ml-2">
+                        <h6 class="mr-auto text-muted">Người liên hệ</h6>
+                        <div class="d-flex justify-content-around">
+                            <a class="pr-3 text-muted" href=""><i class="fa-solid fa-video"></i></a>
+                            <a class="pr-3 text-muted" href=""><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <a class="pr-3 text-muted" href=""> <i class="fa-solid fa-ellipsis"></i></a>
+                        </div>
+                    </div>
+                    <div class="sidebar-item">
+                        <img alt=""
+                             class="sidebar-item__img" th:src="@{/web/image/avatar_batman.png}">
+                        <a class="sidebar-item__link" href="">Võ Lâm</a>
+                    </div>
+                    <div class="sidebar-item">
+                        <img alt=""
+                             class="sidebar-item__img"
+                             src="image/avatar/avatar1.png">
+                        <a class="sidebar-item__link" href="">Võ Kim Trí</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="fragments/common :: js-source"></th:block>
+<!--JS Custom-->
+<script th:src="@{/web/assets/js/slider.js}" src="../../static/web/assets/js/slider.js"></script>
+<script th:inline="javascript">
+    const $message = [[${message}]]
+    const $status = [[${status}]]
+    if ($status === 'success') {
+        $.toast({
+            text: $message,
+            heading: "Message",
+            icon: "success",
+            showHideTransition: "slide",
+            allowToastClose: "true",
+            hideAfter: "2000",
+            position: "top-right",
+            loaderBg: '#ef3a5d'
+        });
+    }
+</script>
+</body>
+
+</html>
