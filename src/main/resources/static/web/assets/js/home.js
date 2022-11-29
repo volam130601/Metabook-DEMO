@@ -12,7 +12,7 @@ function showCommentBox(param) {
         const $commentBox = $(param + ">.comment-post");
         const $spinner = $(param + "> .comment-spinner");
         let flag = true;
-        if (flag == true) {
+        if (flag === true) {
             $spinner.removeClass("d-none");
         }
         setTimeout(() => {
@@ -225,7 +225,7 @@ if ($toast.includes('login?error')) {
         text: "Invalid email or password",
         heading: "Message",
         icon: "error",
-        showHideTransition: "slide",
+        showHideTransition: "plain",
         allowToastClose: "true",
         hideAfter: "2000",
         position: "top-right",
@@ -237,11 +237,157 @@ if ($toast.includes('login?logout')) {
         text: "You have been logged out.",
         heading: "Message",
         icon: "success",
-        showHideTransition: "slide",
+        showHideTransition: "plain",
         allowToastClose: "true",
         hideAfter: "2000",
         position: "top-right",
         loaderBg: '#ef3a5d'
+    });
+}
+//Check Validate FormRegistration
+const $firstName = $('#firstName')
+const $lastName = $('#lastName')
+const $newEmail = $('#newEmail')
+const $newPassword = $('#newPassword')
+const $birthday = $('#birthday')
+const $smallFirstName = $('#firstNameId')
+const $smallLastName = $('#lastNameId')
+const $smallnewEmail = $('#newEmailId')
+const $smallnewPassword = $('#newPasswordId')
+const $smallbirthday = $('#birthdayId')
+
+$($firstName).focus(function (e) {
+    e.preventDefault();
+    $smallFirstName.html('')
+    $firstName.removeClass('border-danger')
+});
+$($lastName).focus(function (e) {
+    e.preventDefault();
+    $smallLastName.html('')
+    $lastName.removeClass('border-danger')
+});
+$($newEmail).focus(function (e) {
+    e.preventDefault();
+    $smallnewEmail.html('')
+    $newEmail.removeClass('border-danger')
+});
+$($newPassword).focus(function (e) {
+    e.preventDefault();
+    $smallnewPassword.html('')
+    $newPassword.removeClass('border-danger')
+});
+$($birthday).focus(function (e) {
+    e.preventDefault();
+    $smallbirthday.html('')
+    $birthday.removeClass('border-danger')
+});
+//Register Function
+$('#registration').submit(function (e) {
+    e.preventDefault();
+    let flag = 1, count = 1;
+    let $values = {}
+    $.each($('#registration').serializeArray(), function (i, field) {
+        if (field.name == "firstName") {
+            if (field.value == "") {
+                $smallFirstName.html("Please enter a valid first name")
+                $('#firstName').addClass('border-danger')
+            } else {
+                flag += 1;
+                $values[field.name] = field.value
+            }
+        }
+        if (field.name == "lastName") {
+            if (field.value == "") {
+                $smallLastName.html("Please enter a valid last name")
+                $('#lastName').addClass('border-danger')
+            } else {
+                flag += 1;
+                $values[field.name] = field.value
+            }
+        }
+        if (field.name == "newEmail") {
+            if (field.value == "") {
+                $smallnewEmail.html("Please enter a valid email address")
+                $('#newEmail').addClass('border-danger')
+            } else if (!validateEmail(field.value)) {
+                $smallnewEmail.html("Email address is invalid")
+                $('#newEmail').addClass('border-danger')
+            } else if (checkEmailExist(field.value)) {
+                $smallnewEmail.html("Email address is exist")
+                $('#newEmail').addClass('border-danger')
+            } else {
+                flag += 1;
+                $values[field.name] = field.value
+            }
+        }
+        if (field.name == "newPassword") {
+            if (field.value == "") {
+                $smallnewPassword.html("Please enter a valid new password")
+                $('#newPassword').addClass('border-danger')
+            } else {
+                flag += 1;
+                $values[field.name] = field.value
+            }
+        }
+        if (field.name == "birthday" || field.name == "gender") {
+            flag += 1;
+            $values[field.name] = field.value
+        }
+        count++;
+    });
+    if (flag == count)
+        sendRegistration(JSON.stringify($values))
+    else console.log("Register Wrong")
+});
+
+function validateEmail($email) {
+    const emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    return emailReg.test($email);
+}
+
+function checkEmailExist(param) {
+    $.get({
+        url: "/api/check-email",
+        data: {newEmail: param},
+        dataType: "json",
+        contentType: "application/json",
+        success: function (res) {
+            if (res.status === "success") {
+                return true;
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    });
+    return false;
+}
+
+function sendRegistration(data) {
+    $.post({
+        url: "/api/registration",
+        data: data,
+        dataType: "json",
+        contentType: "application/json",
+        success: function (res) {
+            console.log(res)
+            if (res.status === "success") {
+                $('#create_account').modal('toggle')
+                $.toast({
+                    text: "Registration is success",
+                    heading: "Message",
+                    icon: "success",
+                    showHideTransition: "plain",
+                    allowToastClose: "true",
+                    hideAfter: "2000",
+                    position: "top-right",
+                    loaderBg: '#ef3a5d'
+                });
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
     });
 }
 

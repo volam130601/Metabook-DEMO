@@ -55,7 +55,8 @@
                             </div>
                             <button type="submit" class="btn btn-secondary btn-meta w-100 border-0 font-weight-bold fs-5">Login</button>
                         </form>
-                            <a href="" class="text-meta mt-2 fs-2">Forgot password?</a>
+                            <button class="text-meta mt-2 fs-2 border-0 bg-transparent btn-focus" data-toggle="modal"
+                                     data-target="#forgot_password">Forgot password?</button>
                             <hr class="mt-4 mb-4">
                             <button class="btn btn-primary w-100 border-0 font-weight-bold fs-5" data-toggle="modal"
                                 data-target="#create_account">Create new account</button>
@@ -71,7 +72,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content ">
-                <form action="#!">
+                <form id="registration">
                     <div class="modal-header bg-meta text-white">
                         <div class="d-flex flex-column">
                             <h5 class="modal-title w-100 fs-9" id="exampleModalLongTitle">Register</h5>
@@ -86,26 +87,25 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control bg-grey" name="firstName" id="firstName"
-                                        aria-describedby="helpId" placeholder="First name" required>
-                                    <!-- <small id="helpId" class="form-text text-muted">First name invalid.</small> -->
+                                           aria-describedby="helpId" placeholder="First name">
+                                    <small id="firstNameId" class="fs-2 text-danger font-weight-bold"></small>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control bg-grey" name="lastName" id="lastName"
-                                        aria-describedby="helpId" placeholder="Last name" required>
-                                    <!-- <small id="helpId" class="form-text text-muted">Last name invalid</small> -->
+                                           aria-describedby="helpId" placeholder="Last name">
+                                    <small id="lastNameId" class="fs-2 text-danger font-weight-bold"></small>
                                 </div>
                             </div>
                         </div>
-<!--                        Form Register-->
                         <div class="row">
                             <div class="col">
 
                                 <div class="form-group">
-                                    <input type="email" class="form-control bg-grey" name="new-email" id="new-email"
-                                        aria-describedby="helpId" placeholder="Email or phone number" required>
-                                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                                    <input type="email" class="form-control bg-grey" name="newEmail" id="newEmail"
+                                           aria-describedby="newEmailId" placeholder="Email or phone number">
+                                    <small id="newEmailId" class="fs-2 text-danger font-weight-bold"></small>
                                 </div>
                             </div>
                         </div>
@@ -113,8 +113,8 @@
                             <div class="col">
                                 <div class="form-group">
                                     <input type="password" class="form-control bg-grey" name="newPassword"
-                                        id="newPassword" aria-describedby="helpId" placeholder="New password">
-                                    <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+                                           id="newPassword" aria-describedby="helpId" placeholder="New password">
+                                    <small id="newPasswordId" class="fs-2 text-danger font-weight-bold"></small>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,8 @@
                                 <div class="form-group">
                                     <label for="birthday" class="fs-2 mb-1 text-muted">Birthday</label>
                                     <input type="date" class="form-control p-2" name="birthday" id="birthday"
-                                        aria-describedby="helpId">
+                                           aria-describedby="helpId" required>
+                                    <small id="birthdayId" class="fs-2 text-danger font-weight-bold"></small>
                                 </div>
                             </div>
                         </div>
@@ -133,15 +134,14 @@
                                 <div class="d-flex">
                                     <div class="form-check form-check-gender border rounded-pill mr-3">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="gender-radio"
-                                                value="checkedValue" checked>
+                                            <input type="radio" class="form-check-input" name="gender" value="true"
+                                                   checked>
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check form-check-gender border rounded-pill mr-3">
                                         <label class="form-check-label">
-                                            <input type="radio" class="form-check-input" name="gender-radio"
-                                                value="checkedValue">
+                                            <input type="radio" class="form-check-input" name="gender" value="false">
                                             Female
                                         </label>
                                     </div>
@@ -152,6 +152,38 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="forgot_password" tabindex="-1" role="dialog" aria-labelledby="forgot_password-title"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content ">
+                <form id="formForgotPassword">
+                    <div class="modal-header bg-meta text-white">
+                        <div class="d-flex flex-column">
+                            <h5 class="modal-title w-100 fs-9">Reset Your Password?</h5>
+                            <div class="fs-3">If you forgot your password, you can reset it here.</div>
+                        </div>
+                        <button type="button" class="close btn-focus" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" class="fs-9">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="emailForgotPassword" class="fs-3 font-weight-bold w-100">Your email</label>
+                                    <input type="email" class="form-control bg-grey" name="emailForgotPassword" id="emailForgotPassword"
+                                           aria-describedby="emailForgotPasswordId" placeholder="Enter your email address">
+                                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-meta">Send Email</button>
                     </div>
                 </form>
             </div>

@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.Date;
 @Builder
 @Table(name = "users",
         uniqueConstraints = {@UniqueConstraint(name = "UN_Email", columnNames = "email")})
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -49,4 +50,9 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Role role;
+
+    @Transient
+    private String newEmail;
+    @Transient
+    private String newPassword;
 }
