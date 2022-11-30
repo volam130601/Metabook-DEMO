@@ -9,12 +9,12 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    boolean existEmail(String email);
-
-
     int enableAccount(User user);
 
     User register(User user);
 
     User save(User user);
+
+    boolean existsUserByEmail(String email);
+
 }

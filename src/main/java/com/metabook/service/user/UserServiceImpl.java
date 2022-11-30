@@ -30,11 +30,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean existEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-    @Override
     public int enableAccount(User user) {
         return 0;
     }
@@ -44,6 +39,11 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUpdateAt(new Date());
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean existsUserByEmail(String email) {
+        return userRepository.existsUserByEmail(email);
     }
 
     public User update(User user) {

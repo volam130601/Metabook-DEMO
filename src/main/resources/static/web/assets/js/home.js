@@ -281,6 +281,7 @@ $($birthday).focus(function (e) {
     $smallbirthday.html('')
     $birthday.removeClass('border-danger')
 });
+
 //Register Function
 $('#registration').submit(function (e) {
     e.preventDefault();
@@ -306,13 +307,18 @@ $('#registration').submit(function (e) {
             }
         }
         if (field.name == "newEmail") {
+            let check_email = false
+            checkEmailExist(field.value).done(function (response) {
+                if (response.status === "success")
+                    check_email = true
+            })
             if (field.value == "") {
                 $smallnewEmail.html("Please enter a valid email address")
                 $('#newEmail').addClass('border-danger')
             } else if (!validateEmail(field.value)) {
                 $smallnewEmail.html("Email address is invalid")
                 $('#newEmail').addClass('border-danger')
-            } else if (checkEmailExist(field.value)) {
+            } else if (check_email) {
                 $smallnewEmail.html("Email address is exist")
                 $('#newEmail').addClass('border-danger')
             } else {
@@ -346,21 +352,20 @@ function validateEmail($email) {
 }
 
 function checkEmailExist(param) {
-    $.get({
+    return $.get({
         url: "/api/check-email",
-        data: {newEmail: param},
+        data: {email: param},
         dataType: "json",
         contentType: "application/json",
+        async: false,
         success: function (res) {
-            if (res.status === "success") {
-                return true;
-            }
+            console.log('check email success')
         },
         error: function (e) {
+            console.log('check email failed')
             console.log(e)
         }
     });
-    return false;
 }
 
 function sendRegistration(data) {
@@ -390,4 +395,64 @@ function sendRegistration(data) {
         }
     });
 }
+
+
+//Form forgot password
+const $emailFG = $('#emailForgotPassword')
+const $smallEmailFG = $('#smallForgotPassword')
+$emailFG.focus(function (e) {
+    e.preventDefault()
+    $smallEmailFG.html('')
+    $emailFG.removeClass('border-danger')
+})
+
+$('#formForgotPassword').submit(function (e) {
+    e.preventDefault()
+    let check_email = false
+    checkEmailExist($emailFG.val()).done(function (response) {
+        if (response.status === "success")
+            check_email = true
+    })
+    if (check_email) {
+        $.get({
+            url: "/api/send-email",
+            data: {email: $emailFG.val()},
+            dataType: "json",
+            contentType: "application/json",
+            success: function (res) {
+                console.log(res)
+                console.log("send email success...")
+                if (res.status === 'success')
+                    $.toast({
+                        text: res.message,
+                        heading: "Note",
+                        icon: "success",
+                        showHideTransition: "plain",
+                        allowToastClose: "true",
+                        hideAfter: "2000",
+                        position: "top-right",
+                        loaderBg: '#ef3a5d'
+                    });
+                else $.toast({
+                    text: res.message,
+                    heading: "Note",
+                    icon: "error",
+                    showHideTransition: "plain",
+                    allowToastClose: "true",
+                    hideAfter: "2000",
+                    position: "top-right",
+                    loaderBg: '#ef3a5d'
+                });
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        });
+        console.log('Waiting send email....')
+        $('#forgot_password').modal('toggle')
+    } else {
+        $smallEmailFG.html('Email cannot found')
+        $emailFG.addClass('border-danger')
+    }
+})
 
