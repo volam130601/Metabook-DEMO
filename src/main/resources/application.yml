@@ -25,3 +25,8 @@ spring:
         debug: false
     protocol: smtp
     test-connection: false
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

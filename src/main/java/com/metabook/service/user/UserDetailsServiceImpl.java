@@ -19,6 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Email cannot found " + username);
         }
-        return new CustomeUserDetails(user);
+        return new CustomUserDetails(user);
     }
 }

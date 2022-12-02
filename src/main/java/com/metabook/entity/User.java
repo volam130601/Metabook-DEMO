@@ -1,11 +1,13 @@
 package com.metabook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,33 +28,37 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String fullName;
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
     private boolean gender = true;
-
-    public String getGender() {
-        return (gender) ? "Male" : "Female";
-    }
-
     private Date birthDay;
     private String country;
-
     private boolean isEnabled = false;
+    private String avatar;
 
     @CreatedDate
     private Date createAt;
     private Date updateAt;
-
     @ManyToOne
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Role role;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Story> storyList;
+
     @Transient
     private String newEmail;
     @Transient
     private String newPassword;
+
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+    public String getGender() {
+        return (gender) ? "Male" : "Female";
+    }
 }

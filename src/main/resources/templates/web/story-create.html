@@ -1,195 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Create Story | Facebook</title>
+    <title>Create Story | Metabook</title>
     <th:block th:replace="fragments/common :: head-source"></th:block>
 
 </head>
 
 <body class="bg-content">
-    <div class="container-fluid h-100vh">
-        <div class="row h-100">
-            <div class="col-3 bg-white shadow">
-                <div class="story-menu d-flex flex-column">
-                    <a href="index.html" class="d-flex align-items-center mt-2">
+<div class="container-fluid h-100vh">
+    <div class="row h-100">
+        <div class="col-3 bg-white shadow">
+            <div class="story-menu d-flex flex-column">
+                <a class="d-flex align-items-center mt-2" th:href="@{/}">
                         <span class="header-close bg-dark  text-white rounded-circle mr-2"><i
                                 class="fa-solid fa-xmark"></i></span>
-                        <img width="42" src="image/metabook.png" alt="">
-                    </a>
-                    <hr class="story-menu-line shadow-line-down">
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-                        <h4 class="font-weight-bold">My story</h4>
-                        <i class="fa-solid fa-gear bg-grey-1 p-2 fs-6 rounded-circle"></i>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <img src="image/avatar_batman.png" width="60" alt="">
-                        <span class="fs-4 font-weight-bold ml-2">Võ Lâm</span>
-                    </div>
-                    <hr class="story-menu-line mt-3">
-                    <div id="story-paint" class="story-paint pr-2 d-none">
-                        <div class="story-enter">
-                            <textarea id="story-enter-text" class="story-enter-text mt-2" rows="6"></textarea>
-                            <label class="story-enter-label fs-1 font-weight-bold"
-                                for="story-enter-text">Document</label>
-                            <span class="story-enter-span font-weight-bold">Start enter text</span>
-                        </div>
-                        <button onclick="showSelectOption()"
-                            class="story-font-style mt-2 w-100 rounded p-2 d-flex align-items-center border-grey-1 bg-white">
-                            <i class="fa-solid fa-font ml-2"></i>
-                            <div id="story-font-style" class="ml-3 fs-5">Simple</div>
-                            <i class="fa-solid fa-caret-down ml-auto"></i>
-                        </button>
-                        <div class="story-select-option d-none">
-                            <div class="p-0 shadow-2 border-grey-1 rounded d-flex flex-column">
-                                <button onclick="changeFontStyle(this)"
-                                    class="story-select-item d-flex justify-content-start border-0">Simple</button>
-                                <button onclick="changeFontStyle(this)"
-                                    class="story-select-item d-flex justify-content-start border-0">Succinct</button>
-                                <button onclick="changeFontStyle(this)"
-                                    class="story-select-item d-flex justify-content-start border-0">Normal</button>
-                                <button onclick="changeFontStyle(this)"
-                                    class="story-select-item d-flex justify-content-start border-0">Title</button>
-                            </div>
-                        </div>
-                        <div class="story-background mb-3 border-grey-1 rounded mt-3 pl-3 pr-3 pt-2 pb-2">
-                            <label for="" class="text-muted fs-3">Background</label>
-                            <div id="background-list" class="d-flex flex-wrap">
-                                <button onclick="changeBackground(1)"
-                                    class="btn-focus d-flex justify-content-center align-items-center rounded-circle h-35px w-35px border-0 ml-2 ">
-                                    <img class="story-img background-active rounded-circle"
-                                        src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.16376-6/55349832_403803457088017_170167072418955264_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=a86453&_nc_ohc=y9GIxUCsjI0AX_SguyD&_nc_ht=scontent.fdad1-1.fna&oh=00_AfCfxN1DoxFXC3kf9UF3EfI5Gf-Bcg29f5IGgxzsaHBqKQ&oe=637CD6EE"
-                                        width="30" alt="">
-                                </button>
-                                <button onclick="changeBackground(2)"
-                                    class="btn-focus d-flex justify-content-center align-items-center rounded-circle h-35px w-35px border-0 ml-2 ">
-                                    <img class="story-img rounded-circle"
-                                        src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.16376-6/40416603_276166656331121_1207155431042973696_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=a86453&_nc_ohc=LiLXJ825HCgAX_naXpa&_nc_ht=scontent.fdad1-1.fna&oh=00_AfAB9t11M4w3_H4k2UCtlLmgYA-hkYwiSyDaNmKeP0mk9A&oe=637D024C"
-                                        width="30" alt="">
-                                </button>
-                                <button onclick="changeBackground(3)"
-                                    class="btn-focus d-flex justify-content-center align-items-center rounded-circle h-35px w-35px border-0 ml-2 ">
-                                    <img class="story-img rounded-circle"
-                                        src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.16376-6/40415976_2163632400574709_6263437381412585472_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=a86453&_nc_ohc=bbB6hpnGyNsAX_ImVlh&_nc_ht=scontent.fdad1-1.fna&oh=00_AfD8AQ0LgD_M_foWoIVGZfI8JHMu8XdA_jZl5aQv7fyltA&oe=637B8038"
-                                        width="30" alt="">
-                                </button>
-                                <button onclick="changeBackground(4)"
-                                    class="btn-focus d-flex justify-content-center align-items-center rounded-circle h-35px w-35px border-0 ml-2 ">
-                                    <img class="story-img rounded-circle"
-                                        src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.16376-6/40386062_1858568210896784_7860796569891635200_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=a86453&_nc_ohc=kWqLBlUMGzUAX9EYs-A&tn=RpZHlMl1tZnRpnfl&_nc_ht=scontent.fdad1-1.fna&oh=00_AfCXgAeodhc5o7qohXVaC_3XfSr6X9xXvxT3TswZanvXrA&oe=637C5C8B"
-                                        width="30" alt="">
-                                </button>
-                                <button onclick="changeBackground(5)"
-                                    class="btn-focus d-flex justify-content-center align-items-center rounded-circle h-35px w-35px border-0 ml-2 ">
-                                    <img class="story-img rounded-circle"
-                                        src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.16376-6/51618036_236995930542329_4218790918519521280_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=a86453&_nc_ohc=gcp4v-_LJgkAX9G5xbf&_nc_ht=scontent.fdad1-1.fna&oh=00_AfDmhvdluTGf1K__o0PvTvIKoyix5Cmugfc50SuQNGc-Sw&oe=637B7D4A"
-                                        width="30" alt="">
-                                </button>
-                                <button onclick="changeBackground(6)"
-                                    class="btn-focus d-flex justify-content-center align-items-center rounded-circle h-35px w-35px border-0 ml-2 ">
-                                    <img class="story-img rounded-circle"
-                                        src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.16376-6/51494681_410811533003647_7652995117124419584_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=a86453&_nc_ohc=0n8Tl1hTqtQAX_sw8tQ&_nc_ht=scontent.fdad1-1.fna&oh=00_AfDclDID02KB5FYnWcWzmVT-IYr04cwtolQbQVPwBuXw0A&oe=637C87EB"
-                                        width="30" alt="">
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="story-footer bg-white d-none">
-                        <hr class="story-footer-line m-0 shadow-line-up">
-                        <div class="d-flex justify-content-around align-items-center mt-2 mb-2">
-                            <div class="btn btn-dark pl-5 pr-5">Deny</div>
-                            <div class="btn btn-primary pl-4 pr-4">Share story</div>
-                        </div>
+                    <img alt="" th:src="@{/web/image/metabook.png}" width="42">
+                </a>
+                <hr class="story-menu-line shadow-line-down">
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <h4 class="font-weight-bold">My story</h4>
+                    <i class="fa-solid fa-gear bg-grey-1 p-2 fs-6 rounded-circle"></i>
+                </div>
+                <div class="d-flex align-items-center">
+                    <img alt="" th:src="@{/web/image/avatar_batman.png}" width="60">
+                    <span class="fs-4 font-weight-bold ml-2">Võ Lâm</span>
+                </div>
+                <hr class="story-menu-line mt-3">
+
+                <div class="story-footer bg-white d-none">
+                    <hr class="story-footer-line m-0 shadow-line-up">
+                    <div class="d-flex justify-content-around align-items-center mt-2 mb-2">
+                        <button class="btn btn-dark pl-5 pr-5" id="deny-story">Deny</button>
+                        <button class="btn btn-primary pl-4 pr-4" id="share-story">Share story</button>
                     </div>
                 </div>
             </div>
-            <div class="col-9">
-                <div class="d-flex flex-column w-100 mt-2">
-                    <div class="d-flex justify-content-end align-items-center">
-                        <a class="navbar-rigth-item">
-                            <i class="fa-brands fa-facebook-messenger"></i>
-                        </a>
-                        <a class="navbar-rigth-item">
-                            <i class="fa fa-bell" aria-hidden="true"></i>
-                            <div class="bell-report">10+</div>
-                        </a>
-                        <div class="dropdown">
-                            <img class="dropdown-toggle" src="image/avatar_batman.png" width="40" alt=""
-                                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                 aria-expanded="false">
-                            <div class="dropdown-menu dropdown-menu-right mt-2 shadow-sm"
-                                aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa fa-user mr-1" aria-hidden="true"></i>
-                                    My account
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fa-solid fa-gear mr-1"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item " href="#">
-                                    <i class="fa-solid fa-right-from-bracket mr-1"></i>
-                                    Log out
-                                </a>
+        </div>
+        <div class="col-9">
+            <div class="d-flex flex-column w-100 mt-2">
+                <div class="d-flex justify-content-end align-items-center">
+                    <a class="navbar-rigth-item">
+                        <i class="fa-brands fa-facebook-messenger"></i>
+                    </a>
+                    <a class="navbar-rigth-item">
+                        <i aria-hidden="true" class="fa fa-bell"></i>
+                        <div class="bell-report">10+</div>
+                    </a>
+                    <div class="dropdown">
+                        <img alt="" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
+                             data-toggle="dropdown" id="dropdownMenuButton" th:src="@{/web/image/avatar_batman.png}"
+                             width="40">
+                        <div aria-labelledby="dropdownMenuButton"
+                             class="dropdown-menu dropdown-menu-right mt-2 shadow-sm">
+                            <a class="dropdown-item" href="#">
+                                <i aria-hidden="true" class="fa fa-user mr-1"></i>
+                                My account
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-gear mr-1"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item " href="#">
+                                <i class="fa-solid fa-right-from-bracket mr-1"></i>
+                                Log out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3 pl-4 pr-4 w-100 mt-4 bg-white border-grey-1 rounded d-none" id="view-story">
+                    <h6 class="m-0 pb-2">View story</h6>
+                    <div class="d-flex justify-content-center w-100 bg-dark border-grey-1 rounded">
+                        <div class="story-card-design-body m-3">
+                            <div class="story-image">
+                                <img alt="" class="story-image_img" id="story-image_img" src="">
                             </div>
                         </div>
                     </div>
-                    <div id="view-story" class="p-3 pl-4 pr-4 w-100 mt-4 bg-white border-grey-1 rounded d-none">
-                        <h6 class="m-0 pb-2">View story</h6>
-                        <div class="d-flex justify-content-center w-100 bg-dark border-grey-1 rounded">
-                            <div class="story-card-design-body m-3">
-                                <div id="story-image"
-                                    class="story-image rounded d-flex justify-content-center align-items-center"
-                                    style="background-image: linear-gradient(135deg, rgb(84, 150, 255) 0%, rgb(5, 72, 179) 100%);">
-                                    <h1 id="story-text" class="fs-6 font-weight-bold text-center text-light m-0"
-                                        style="font-family: serif;">Start enter text</span>
+                </div>
+                <div class="story-box-main">
+                    <div class="d-flex justify-content-center align-content-center">
+                        <div class="story-box rounded d-flex justify-content-center align-items-center bg-meta mr-4"
+                             id="btn-story-image"
+                             style="background-image: radial-gradient(#0077ff, #502ee5);">
+                            <div class="d-flex flex-column">
+                                <div class="text-center">
+                                    <i class="fa-regular fa-image p-3 rounded-circle bg-white"></i>
+                                </div>
+                                <div class="text-center">
+                                    <span class="fs-3 font-weight-bold text-white mt-2">Tạo tin ảnh</span>
+                                </div>
+                                <div class="text-center">
+                                    <input hidden id="upload-image-story" type="file">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="story-box-main">
-                        <div class="d-flex justify-content-center align-content-center">
-                            <div id="btn-story-image"
-                                class="story-box rounded d-flex justify-content-center align-items-center bg-meta mr-4"
-                                style="background-image: radial-gradient(#0077ff, #502ee5);">
-                                <div class="d-flex flex-column">
-                                    <div class="text-center">
-                                        <i class="fa-regular fa-image p-3 rounded-circle bg-white"></i>
-                                    </div>
-                                    <div class="text-center">
-                                        <span class="fs-3 font-weight-bold text-white mt-2">Tạo tin ảnh</span>
-                                    </div>
-                                    <div class="text-center">
-                                        <input type="file" hidden  id="upload-image-story">
-                                    </div>
-                                </div>
-                                <label for="upload-image-story" class="story-box-label rounded"></label>
-                            </div>
-    
-                            <div id="btn-story-text"
-                                class="story-box rounded d-flex justify-content-center align-items-center bg-meta "
-                                style="background-image: radial-gradient(#ff8a00, #e52e71);">
-                                <div class="d-flex flex-column">
-                                    <div class="text-center">
-                                        <i class="fa-solid fa-font p-3 rounded-circle bg-white"></i>
-                                    </div>
-                                    <span class="fs-3 font-weight-bold text-white mt-2">Tạo tin dạng văn bản</span>
-                                </div>
-                            </div>
+                            <label class="story-box-label rounded" for="upload-image-story"></label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Optional JavaScript -->
-    <th:block th:replace="fragments/common :: js-source"></th:block>
+<!-- Optional JavaScript -->
+<th:block th:replace="fragments/common :: js-source"></th:block>
 
-    <!--Drag JS  -->
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <!-- Custom Javascript -->
-    <script src="../../static/web/assets/js/story.js" th:src="@{/web/assets/js/story.js}"></script>
+<!--Drag JS  -->
+<!--<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>-->
+<!-- Custom Javascript -->
+<script src="../../static/web/assets/js/story.js" th:src="@{/web/assets/js/story.js}"></script>
 </body>
 
 </html>

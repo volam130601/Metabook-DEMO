@@ -10,7 +10,7 @@
 <body class="bg-content">
 <nav class="navbar navbar-expand-sm navbar-white bg-white shadow-sm fixed-top">
     <a class="" href="#">
-        <img alt="" src="image/metabook.png" width="40"/></a>
+        <img alt="" th:src="@{/web/image/metabook.png}" width="40"/></a>
     <div class="navbar-search mr-auto">
         <i aria-hidden="true" class="fa fa-search search-icon"></i>
         <input class="search-input" placeholder="Search in Metabook" type="text"/>
@@ -71,17 +71,17 @@
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
-                             class="sidebar-item__img" src="image/friends.png">
+                             class="sidebar-item__img" th:src="@{/web/image/friends.png}">
                         <a class="sidebar-item__link" href="">Friends</a>
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
-                             class="sidebar-item__img" src="image/group.png">
+                             class="sidebar-item__img" th:src="@{/web/image/group.png}">
                         <a class="sidebar-item__link" href="">Group</a>
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
-                             class="sidebar-item__img" src="image/watch.png">
+                             class="sidebar-item__img" th:src="@{/web/image/watch.png}">
                         <a class="sidebar-item__link" href="">Watch</a>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                     <div class="navbar-list mr-auto text-secondary">
                         <a class="navbar-page navbar-story active mr-2">
                             <i class="fa-solid fa-book-open mr-1"></i>
-                            <span class="fs-4 font-weight-bold">News</span>
+                            <span class="fs-4 font-weight-bold text-meta">News</span>
                         </a>
                         <a class="navbar-page navbar-story">
                             <i class="fa-solid fa-video mr-1"></i>
@@ -108,89 +108,28 @@
                             <div class="story-create-info cursor-pointer">
                                 <img alt=""
                                      class="story-create-info__img"
-                                     src="image/story/zoro.jpg">
+                                     th:src="@{/web/image/story/zoro.jpg}">
                                 <span class="story-create-info__icon cursor-pointer"><i
                                         aria-hidden="true" class="fa fa-plus cursor-pointer"></i></span>
                                 <span class="story-create-info__name cursor-pointer">Create Story</span>
                             </div>
                         </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/poster/girl-xinh.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm123 </span>
-                            </div>
+                        <div th:each="story, stat : ${stories}">
+                            <button class="mySlides bg-transparent border-0 btn-focus"
+                                    onclick="" th:onclick="'showStoryNews('+${stat.index + 1}+')'">
+                                <div class="story-card">
+                                    <img alt=""
+                                         class="story-card__img"
+                                         th:src="@{${story.getImagePath()}}">
+                                    <img alt=""
+                                         class="story-avatar"
+                                         th:src="@{/web/image/story/avatar_batman.png}" width="40">
+                                    <span class="story-name text-white "
+                                          th:utext="${story.getUser().getFullName()}"></span>
+                                </div>
+                            </button>
                         </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/story/zoro.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm 2312</span>
-                            </div>
-                        </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/story/zoro.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm 2</span>
-                            </div>
-                        </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/story/zoro.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm 1</span>
-                            </div>
-                        </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/story/zoro.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm 3</span>
-                            </div>
-                        </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/story/zoro.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm 2</span>
-                            </div>
-                        </div>
-                        <div class="mySlides">
-                            <div class="story-card">
-                                <img alt=""
-                                     class="story-card__img"
-                                     src="image/story/zoro.jpg">
-                                <img alt=""
-                                     class="story-avatar"
-                                     src="image/story/avatar_batman.png" width="40">
-                                <span class="story-name text-white ">Võ Lâm 32</span>
-                            </div>
-                        </div>
+
                         <!-- Next and previous buttons -->
                         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                         <a class="next" onclick="plusSlides(1)">&#10095;</a>
@@ -209,17 +148,17 @@
                     <div class="d-flex justify-content-around align-items-center mb-2">
                         <div class="d-flex align-items-center create-post__btn">
                             <img alt=""
-                                 src="image/post/video_icon.png" width="30">
+                                 th:src="@{/web/image/post/video_icon.png}" width="30">
                             <span class="ml-1 font-weight-bold fs-3">Video trực tiếp</span>
                         </div>
                         <div class="d-flex align-items-center create-post__btn">
                             <img alt=""
-                                 src="image/post/picture_icon.png" width="30">
+                                 th:src="@{/web/image/post/picture_icon.png}" width="30">
                             <span class="ml-1 font-weight-bold fs-3">Ảnh/video</span>
                         </div>
                         <div class="d-flex align-items-center create-post__btn">
                             <img alt=""
-                                 src="image/post/face_smile_icon.png" width="30">
+                                 th:src="@{/web/image/post/face_smile_icon.png}" width="30">
                             <span class="ml-1 font-weight-bold fs-3">Feeling/activity</span>
                         </div>
                     </div>
@@ -242,17 +181,17 @@
                 </div>
                 <div class="post-image">
                     <img alt=""
-                         height="500" src="image/post/luffy-gold.jpg" width="500">
+                         height="500" th:src="@{/web/image/post/luffy-gold.jpg}" width="500">
                 </div>
                 <div class="card-footer bg-white">
                     <div class="d-flex align-items-center">
                         <div class="post-like__icon">
                             <img alt=""
-                                 src="image/like/happy_smiley_icon.png">
+                                 th:src="@{/web/image/like/happy_smiley_icon.png}">
                             <img alt=""
-                                 src="image/like/like_thumb_social_vote_favorite_icon.png">
+                                 th:src="@{/web/image/like/like_thumb_social_vote_favorite_icon.png}">
                             <img alt=""
-                                 src="image/like/bad_cry_crying_disappointed_face_icon.png">
+                                 th:src="@{/web/image/like/bad_cry_crying_disappointed_face_icon.png}">
                         </div>
                         <span class="text-muted ml-1">14K</span>
                         <span class="text-muted ml-auto">1,4K comments</span>
@@ -441,9 +380,9 @@
               <div class="card-footer bg-white">
                 <div class="d-flex align-items-center">
                   <div class="post-like__icon">
-                    <img src="image/like/happy_smiley_icon.png" alt="">
-                    <img src="image/like/like_thumb_social_vote_favorite_icon.png" alt="">
-                    <img src="image/like/bad_cry_crying_disappointed_face_icon.png" alt="">
+                    <img th:src="@{/web/mage/like/happy_smiley_icon.png" alt="}">
+                    <img th:src="@{/web/mage/like/like_thumb_social_vote_favorite_icon.png" alt="}">
+                    <img th:src="@{/web/mage/like/bad_cry_crying_disappointed_face_icon.png" alt="}">
                   </div>
                   <span class="text-muted ml-1">14K</span>
                   <span class="text-muted ml-auto">1,4K comments</span>
@@ -506,7 +445,7 @@
                     <div class="sidebar-item">
                         <img alt=""
                              class="sidebar-item__img"
-                             src="image/avatar/avatar1.png">
+                             th:src="@{/web/image/avatar/avatar1.png}">
                         <a class="sidebar-item__link" href="">Võ Kim Trí</a>
                     </div>
                 </div>
@@ -518,23 +457,23 @@
 
 <th:block th:replace="fragments/common :: js-source"></th:block>
 <!--JS Custom-->
-<script th:src="@{/web/assets/js/slider.js}" src="../../static/web/assets/js/slider.js"></script>
-<script th:inline="javascript">
-    const $message = [[${message}]]
-    const $status = [[${status}]]
-    if ($status === 'success') {
-        $.toast({
-            text: $message,
-            heading: "Message",
-            icon: "success",
-            showHideTransition: "plain",
-            allowToastClose: "true",
-            hideAfter: "2000",
-            position: "top-right",
-            loader: "false"
-        });
-    }
-</script>
+<script src="../../static/web/assets/js/slider.js" th:src="@{/web/assets/js/slider.js}"></script>
+<!--<script th:inline="javascript">-->
+<!--    const $message = [[${message}]]-->
+<!--    const $status = [[${status}]]-->
+<!--    if ($status === 'success') {-->
+<!--        $.toast({-->
+<!--            text: $message,-->
+<!--            heading: "Message",-->
+<!--            icon: "success",-->
+<!--            showHideTransition: "plain",-->
+<!--            allowToastClose: "true",-->
+<!--            hideAfter: "2000",-->
+<!--            position: "top-right",-->
+<!--            loader: "false"-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
 </body>
 
 </html>
