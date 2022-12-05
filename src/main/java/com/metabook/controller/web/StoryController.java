@@ -4,12 +4,9 @@ import com.metabook.dto.ResponseObject;
 import com.metabook.dto.StatusCode;
 import com.metabook.entity.Story;
 import com.metabook.repository.StoryRepository;
-import com.metabook.service.user.CustomUserDetails;
 import com.metabook.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 
+import static com.metabook.controller.web.LoginController.getUser;
+
 @RestController()
 @RequestMapping("/api/story")
 public class StoryController {
@@ -27,14 +26,12 @@ public class StoryController {
 
     @PostMapping("/uploadFile")
     public ResponseEntity<ResponseObject> uploadStoryFile(@RequestParam("file") MultipartFile file) throws IOException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails customUser = (CustomUserDetails) authentication.getPrincipal();
 
         String fileName = file.getOriginalFilename();
         Story story = Story.builder()
                 .image(fileName)
                 .createAt(new Date())
-                .user(customUser.getUser())
+                .user(getUser())
                 .build();
         if (storyRepository.existsStoryByImage(fileName)) {
             return ResponseEntity.ok(

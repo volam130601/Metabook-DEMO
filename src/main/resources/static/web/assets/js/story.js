@@ -29,7 +29,6 @@ $('#share-story').click(function (e) {
     let files = $('#upload-image-story')[0].files
     if (files != null) {
         formData.append('file', files[0])
-        console.log(formData.get('file'))
         $.post({
             url: "/api/story/uploadFile",
             enctype: 'multipart/form-data',

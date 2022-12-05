@@ -11,66 +11,23 @@ function showStoryNews(param) {
 }
 
 // Comment JS
-let checkCommentClick = 1;
+$('.comment-spinner').html(`<hr>
+<div class="spinner-grow mt-2" role="status">
+    <span class="sr-only">Loading...</span>
+</div>`)
 
 function showCommentBox(param) {
-    if (checkCommentClick == 1) {
-        checkCommentClick += 1;
-        const $commentBox = $(param + ">.comment-post");
-        const $spinner = $(param + "> .comment-spinner");
-        let flag = true;
-        if (flag === true) {
-            $spinner.removeClass("d-none");
-        }
-        setTimeout(() => {
-            flag = false;
-            $spinner.addClass("d-none");
-            $commentBox.removeClass("d-none");
-        }, 700);
+    const $commentBox = $(param + ">.comment-post");
+    const $spinner = $(param + "> .comment-spinner");
+    let flag = true;
+    if (flag == true) {
+        $spinner.removeClass("d-none");
     }
-}
-
-// Like JS
-function likePost(param) {
-    const $likePost = $(param);
-    const $dontLike = $(param).children("i:nth-child(1)");
-    const $isLike = $(param).children("i:nth-child(2)");
-    if ($likePost.hasClass("text-meta")) {
-        $likePost.removeClass("text-meta");
-        $likePost.addClass("text-muted");
-        $dontLike.removeClass("d-none");
-        $isLike.addClass("d-none");
-    } else {
-        $likePost.addClass("text-meta");
-        $likePost.removeClass("text-muted");
-        $dontLike.addClass("d-none");
-        $isLike.removeClass("d-none");
-    }
-    $.ajax({
-        url: "http://localhost:8080/admin/api/users",
-        type: "get",
-        headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-        },
-        success: function (response) {
-            console.log(response)
-        },
-        error: function (response) {
-            console.log(response)
-        }
-    });
-}
-
-// Reply Comment
-function showReply(param) {
-    $(param)
-        .children(".reply-comment-box")
-        .children("li.reply-item")
-        .removeClass("d-none");
-    $(param)
-        .children(".reply-comment-box")
-        .children("div.reply-item")
-        .addClass("d-none");
+    setTimeout(() => {
+        flag = false;
+        $spinner.html("");
+        $commentBox.removeClass("d-none");
+    }, 700);
 }
 
 
@@ -327,7 +284,6 @@ $('#formForgotPassword').submit(function (e) {
             dataType: "json",
             contentType: "application/json",
             success: function (res) {
-                console.log(res)
                 console.log("send email success...")
                 if (res.status === 'success')
                     $.toast({

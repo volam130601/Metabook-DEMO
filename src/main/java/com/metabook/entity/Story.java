@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
 
+import static com.metabook.entity.post.Post.getString;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,20 +33,6 @@ public class Story {
 
     @Transient
     public String getCurrentDate() {
-        if (createAt == null) return null;
-        Date dateTemp = new Date();
-        long subTime = dateTemp.getTime() - createAt.getTime();
-        long seconds = subTime / 1000;
-        long minutes = subTime / (60 * 1000);
-        long hours = subTime / (60 * 60 * 1000);
-        long days = subTime / (24 * 60 * 60 * 1000);
-
-        if (days != 0) {
-            return days + " days";
-        } else if (hours != 0) {
-            return hours + " hours";
-        } else if (minutes != 0) {
-            return minutes + " minutes";
-        } else return seconds + " seconds";
+        return getString(createAt);
     }
 }

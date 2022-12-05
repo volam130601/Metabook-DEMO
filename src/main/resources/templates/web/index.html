@@ -86,7 +86,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="col-lg-6 mt-3 mb-5">
             <div class="card content ">
@@ -142,7 +141,8 @@
                     <div class="d-flex mt-3 ml-3">
                         <img alt=""
                              th:src="@{/web/image/avatar_batman.png}" width="40">
-                        <input class="ml-3 mr-3 create-post__input" placeholder="What do you think?" type="text">
+                        <input class="ml-3 mr-3 create-post__input btn-focus" data-target="#postCreateModal"
+                               data-toggle="modal" placeholder="What do you think?" readonly="readonly" type="text">
                     </div>
                     <hr>
                     <div class="d-flex justify-content-around align-items-center mb-2">
@@ -164,247 +164,10 @@
                     </div>
                 </div>
             </div>
-            <!-- Post One Image -->
-            <div class="card content mt-3">
-                <div class="card-header bg-white">
-                    <div class="d-flex align-items-center mb-2">
-                        <img alt=""
-                             th:src="@{/web/image/avatar_batman.png}" width="50">
-                        <div class="d-flex flex-column ml-2">
-                            <h6 class="m-0">Bat Man</h6>
-                            <span class="text-muted"><small>22 minutes</small> <b>&#xB7</b> <small><i
-                                    class="fa-solid fa-earth-americas"></i></small></span>
-                        </div>
-                        <i class="fa-solid fa-ellipsis ml-auto fs-6"></i>
-                    </div>
-                    <div class="post-content">Không để nó đẻ trứng</div>
-                </div>
-                <div class="post-image">
-                    <img alt=""
-                         height="500" th:src="@{/web/image/post/luffy-gold.jpg}" width="500">
-                </div>
-                <div class="card-footer bg-white">
-                    <div class="d-flex align-items-center">
-                        <div class="post-like__icon">
-                            <img alt=""
-                                 th:src="@{/web/image/like/happy_smiley_icon.png}">
-                            <img alt=""
-                                 th:src="@{/web/image/like/like_thumb_social_vote_favorite_icon.png}">
-                            <img alt=""
-                                 th:src="@{/web/image/like/bad_cry_crying_disappointed_face_icon.png}">
-                        </div>
-                        <span class="text-muted ml-1">14K</span>
-                        <span class="text-muted ml-auto">1,4K comments</span>
-                        <span class="text-muted ml-2">274 shares</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-around align-items-center">
-                        <button class="btn-post fs-4 font-weight-bold text-meta" id="like-post-1"
-                                onclick="likePost(this)">
-                            <i class="fa-regular fa-thumbs-up d-none"></i>
-                            <i class="fa-solid fa-thumbs-up"></i>
-                            <span>Like</span>
-                        </button>
-                        <button class="btn-post fs-4 font-weight-bold text-muted"
-                                onclick="showCommentBox('#comment-post-2')">
-                            <i class="fa-regular fa-comment"></i>
-                            <span>Comment</span>
-                        </button>
-                        <button class="btn-post fs-4 font-weight-bold text-muted">
-                            <i class="fa-solid fa-share"></i>
-                            <span>Share</span>
-                        </button>
-                    </div>
-                    <!-- If comment null hr: d-none -->
-                    <div id="comment-post-2">
-                        <div class="text-center comment-spinner d-none">
-                            <hr>
-                            <div class="spinner-grow mt-2" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </div>
-                        <div class="w-100">
-                            <hr>
-                            <span class="d-flex justify-content-end align-items-center text-muted">
-                  <span class="font-weight-bold fs-3">Phù hợp nhất</span>
-                  <i class="fa-solid fa-caret-down ml-2"></i>
-                </span>
-                            <div class="comment-write d-flex align-content-center mt-2">
-                                <img class="h-40px"
-                                     th:src="@{/web/image/avatar_batman.png}">
-                                <input class="comment-input ml-2" placeholder="Enter comment..." type="text">
-                            </div>
-                            <div class="comment-box" id="comment-box-1">
-                                <div class="comment-read  d-flex mt-2">
-                                    <img class="h-40px"
-                                         th:src="@{/web/image/avatar_batman.png}">
-                                    <div class=" d-flex flex-column ml-2">
-                                        <div class="comment-detail  ">
-                                            <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
-                                            <div class="comment-content fs-3 ">What are anime name?</div>
-                                        </div>
-                                        <div class="d-flex align-items-center ml-2">
-                                            <button
-                                                    class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                Like
-                                            </button>
-                                            <button
-                                                    class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                Reply
-                                            </button>
-                                            <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
-                                        </div>
-                                    </div>
-                                    <div class="line-reply-under"></div>
-                                </div>
-                                <ul class="reply-comment-box ml-2">
-                                    <div class="reply-item text-muted">
-                                        <i class="fa-solid fa-share mt-2 ml-2"></i>
-                                        <button class="btn-reply mt-2 fs-3 font-weight-bold bg-transparent border-0 text-secondary"
-                                                onclick="showReply('#comment-box-1')">
-                                            3 Reply
-                                        </button>
-                                        <div class="line-corner"></div>
-                                    </div>
-                                    <li class="reply-item d-none">
-                                        <div class="comment-read d-flex mt-2">
-                                            <img class="comment-avatar h-35px"
-                                                 th:src="@{/web/image/avatar_batman.png}">
-                                            <div class=" d-flex flex-column ml-2">
-                                                <div class="comment-detail ">
-                                                    <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
-                                                    <div class="comment-content fs-3 ">Hello guys!</div>
-                                                </div>
-                                                <div class="d-flex align-items-center ml-2">
-                                                    <button
-                                                            class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                        Like
-                                                    </button>
-                                                    <button
-                                                            class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                        Reply
-                                                    </button>
-                                                    <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="line-vertical"></div>
-                                        <div class="line-corner"></div>
-                                    </li>
-                                    <li class="reply-item d-none">
-                                        <div class="comment-read d-flex mt-2">
-                                            <img class="comment-avatar h-35px"
-                                                 th:src="@{/web/image/avatar_batman.png}">
-                                            <div class=" d-flex flex-column ml-2">
-                                                <div class="comment-detail ">
-                                                    <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
-                                                    <div class="comment-content fs-3 ">Hello guysHello guysHello
-                                                        guysHello guysHello guysHello
-                                                        guysHello guysHello guysHello guysHello guysHello guysHello
-                                                        guysHello guysHello guysHello
-                                                        guys!
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center ml-2">
-                                                    <button
-                                                            class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                        Like
-                                                    </button>
-                                                    <button
-                                                            class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                        Reply
-                                                    </button>
-                                                    <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="line-vertical"></div>
-                                        <div class="line-corner"></div>
-                                    </li>
-                                    <li class="reply-item d-none">
-                                        <div class="comment-read d-flex mt-2">
-                                            <img class="comment-avatar h-35px"
-                                                 th:src="@{/web/image/avatar_batman.png}">
-                                            <div class=" d-flex flex-column ml-2">
-                                                <div class="comment-detail ">
-                                                    <h6 class="comment-name fs-3 m-0">Võ Lâm</h6>
-                                                    <div class="comment-content fs-3 ">Hello guysHello guysHello
-                                                        guysHello guysHello guysHello
-                                                        guysHello guysHello guysHello guysHello guysHello guysHello
-                                                        guysHello guysHello guysHello
-                                                        guys!
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center ml-2">
-                                                    <button
-                                                            class="comment-like fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                        Like
-                                                    </button>
-                                                    <button
-                                                            class="comment-reply fs-1 font-weight-bold bg-transparent border-0 text-secondary">
-                                                        Reply
-                                                    </button>
-                                                    <span class="comment-time fs-1 ml-2 text-muted">59 minutes</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="line-vertical d-none"></div>
-                                        <div class="line-corner"></div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+            <!-- Post Image -->
+            <div id="post-image-body">
+                <!--  Post Body here    -->
             </div>
-            <!-- Post Video -->
-            <!-- <div class="card content mt-3">
-              <div class="card-header bg-white">
-                <div class="d-flex align-items-center mb-2">
-                  <img th:src="@{/web/image/avatar_batman.png}" width="50" alt="">
-                  <div class="d-flex flex-column ml-2">
-                    <h6 class="m-0">Bat Man</h6>
-                    <span class="text-muted"><small>22 minutes</small> <b>&#xB7</b> <small><i
-                          class="fa-solid fa-earth-americas"></i></small></span>
-                  </div>
-                  <i class="fa-solid fa-ellipsis ml-auto fs-6"></i>
-                </div>
-                <div class="post-content">ẢNH KHÔNG CHE - FULL HD</div>
-              </div>
-              <div class="post-video">
-                <video onclick="play(event)"
-                  src="video/Rick Astley - Never Gonna Give You Up (Official Music Video).mkv" id="video"
-                  poster="image/poster/girl-xinh.jpg" controls></video>
-              </div>
-              <div class="card-footer bg-white">
-                <div class="d-flex align-items-center">
-                  <div class="post-like__icon">
-                    <img th:src="@{/web/mage/like/happy_smiley_icon.png" alt="}">
-                    <img th:src="@{/web/mage/like/like_thumb_social_vote_favorite_icon.png" alt="}">
-                    <img th:src="@{/web/mage/like/bad_cry_crying_disappointed_face_icon.png" alt="}">
-                  </div>
-                  <span class="text-muted ml-1">14K</span>
-                  <span class="text-muted ml-auto">1,4K comments</span>
-                  <span class="text-muted ml-2">274 shares</span>
-                </div>
-                <hr>
-                <div class="d-flex justify-content-around align-items-center">
-                  <button class="btn-post fs-4 font-weight-bold text-muted">
-                    <i class="fa-regular fa-thumbs-up"></i>
-                    Like
-                  </button>
-                  <button class="btn-post fs-4 font-weight-bold text-muted">
-                    <i class="fa-regular fa-comment"></i>
-                    Comment
-                  </button>
-                  <button class="btn-post fs-4 font-weight-bold text-muted">
-                    <i class="fa-solid fa-share"></i>
-                    Share
-                  </button>
-                </div>
-              </div>
-            </div> -->
         </div>
 
         <div class="col">
@@ -455,25 +218,75 @@
 </div>
 
 
+<!--  Post Create Modal  -->
+<div aria-hidden="true" aria-labelledby="postCreateModalLabel" class="modal fade" id="postCreateModal"
+     style="background-color: rgb(255 255 255 / 60%);" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="font-weight-bold" id="postCreateModalLabel">Post Create</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-content-center">
+                    <img alt="" class="hw-50px rounded-circle img-cover" th:src="@{/web/image/zoro.jpg}">
+                    <div class="d-flex flex-column ml-2">
+                        <div class="fs-4 font-weight-bold">Võ Lâm</div>
+                        <button class="bg-grey-1 border-0 rounded fs-3 font-weight-bold text-muted">
+                            <!--                            <i class="fa-solid fa-lock fs-3 mr-1"></i>-->
+                            <i class="fa-solid fa-earth-americas"></i>
+                            <span>Global</span>
+                            <i class="fa-solid fa-sort-down ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="post-create-body mt-3" id="post-create-body">
+                    <div class="post-create__input">
+                        <textarea class="w-100 border-0 btn-focus pr-5" id="post-create__input" name="post-text"
+                                  placeholder="Hi sir, what are you thinking?" rows="4"
+                                  style="resize: none;"></textarea>
+                        <i class="fa-regular fa-face-smile fs-5 text-muted p-2 m-1"></i>
+                    </div>
+                    <div class="position-relative border-grey-1 rounded">
+                        <div class="post-create__image m-2 border-grey-1 bg-grey-1 rounded">
+                            <div class="d-flex flex-column justify-content-center align-items-center"
+                                 style="height: 200px;">
+                                <i class="fa-solid fa-image bg-grey p-3 rounded-circle"></i>
+                                <span class="fs-4 font-weight-bold">Add image</span>
+                            </div>
+                            <label class="post-label bg-transparent m-0 rounded" for="upload-image-post"></label>
+                        </div>
+                        <div class="h-100">
+                            <div class="post-image m-2 rounded" id="post-image"></div>
+                        </div>
+                        <input hidden id="upload-image-post" type="file">
+
+                        <button class="d-none post-close position-absolute bg-white pl-2 pr-2 fs-5 font-weight-bold rounded-circle border-0"
+                                onclick="clearImage()"
+                                style="top: 15px; right: 15px;">&times;
+                        </button>
+                        <div class="d-none post-control-top position-absolute bg-light p-1 pl-2 pr-2 rounded"
+                             style="top: 15px; left:20px;">
+                            <i class="fa-solid fa-image"></i>
+                            <span class="fs-3 font-weight-bold">Add image</span>
+                            <label class="post-label bg-transparent m-0" for="upload-image-post"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary w-100" onclick="postContent()" type="button">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <th:block th:replace="fragments/common :: js-source"></th:block>
 <!--JS Custom-->
 <script src="../../static/web/assets/js/slider.js" th:src="@{/web/assets/js/slider.js}"></script>
-<!--<script th:inline="javascript">-->
-<!--    const $message = [[${message}]]-->
-<!--    const $status = [[${status}]]-->
-<!--    if ($status === 'success') {-->
-<!--        $.toast({-->
-<!--            text: $message,-->
-<!--            heading: "Message",-->
-<!--            icon: "success",-->
-<!--            showHideTransition: "plain",-->
-<!--            allowToastClose: "true",-->
-<!--            hideAfter: "2000",-->
-<!--            position: "top-right",-->
-<!--            loader: "false"-->
-<!--        });-->
-<!--    }-->
-<!--</script>-->
+<script src="../../static/web/assets/js/post.js" th:src="@{/web/assets/js/post.js}"></script>
 </body>
 
 </html>

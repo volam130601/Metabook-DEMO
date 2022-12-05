@@ -1,6 +1,8 @@
 package com.metabook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.metabook.entity.post.Post;
+import com.metabook.entity.post.PostLike;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -27,13 +29,13 @@ public class User implements Serializable {
     private Integer phoneNumber;
     private String firstName;
     private String lastName;
+    @Transient
     private String fullName;
     private boolean gender = true;
     private Date birthDay;
     private String country;
     private boolean isEnabled = false;
     private String avatar;
-
     @CreatedDate
     private Date createAt;
     private Date updateAt;
@@ -42,17 +44,31 @@ public class User implements Serializable {
     @EqualsAndHashCode.Exclude
     private Role role;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Story> storyList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Post> postList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<PostLike> postLikeList;
+
+
     @Transient
     private String newEmail;
+
     @Transient
     private String newPassword;
+
 
     public String getFullName() {
         return firstName + " " + lastName;

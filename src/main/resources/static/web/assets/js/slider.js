@@ -1,20 +1,18 @@
-$(document).ready(function () {
-});
 // Slider
 let slideIndex = 0;
 showArrows(slideIndex);
 
-var intervalSlide;
-var number = 0;
-var margin_left = 0;
+let intervalSlide;
+let number = 0;
+let margin_left = 0;
 
 // Next/previous controls
 function plusSlides(n) {
     showArrows((slideIndex += n));
     number = margin_left;
     // margin_left += n * 115;
-    margin_left += n * 125;
-    if (number != margin_left) intervalSlide = loopSlide();
+    margin_left += n * 145;
+    if (number !== margin_left) intervalSlide = loopSlide();
     else clearInterval(intervalSlide);
 }
 
@@ -35,15 +33,15 @@ function loopSlide() {
 }
 
 function showArrows(n) {
-    var $prev = $(".prev");
-    var $next = $(".next");
+    const $prev = $(".prev");
+    const $next = $(".next");
     const slides = $(".mySlides");
     if (n < 1) {
         $prev.hide();
     } else {
         $prev.show();
     }
-    if (n + 4 == slides.length) {
+    if (n + 4 === slides.length) {
         $next.hide();
     } else {
         $next.show();

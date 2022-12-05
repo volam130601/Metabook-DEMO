@@ -1,6 +1,7 @@
 package com.metabook.controller.web;
 
 import com.metabook.entity.User;
+import com.metabook.repository.PostRepository;
 import com.metabook.repository.StoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,13 @@ public class HomeController {
     @Autowired
     private StoryRepository storyRepository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @GetMapping({"/", "/home"})
     public String viewHomePage(Model model) {
         model.addAttribute("stories", storyRepository.findAllReverse());
+        model.addAttribute("posts", postRepository.findAll());
         return "web/index";
     }
 

@@ -5,10 +5,13 @@ import com.metabook.dto.ResponseObject;
 import com.metabook.dto.StatusCode;
 import com.metabook.entity.User;
 import com.metabook.service.email.EmailService;
+import com.metabook.service.user.CustomUserDetails;
 import com.metabook.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,6 +26,12 @@ public class LoginController {
 
     @Autowired
     private EmailService emailService;
+
+    public static User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUser = (CustomUserDetails) authentication.getPrincipal();
+        return customUser.getUser();
+    }
 
     @PostMapping(value = "/registration", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<ResponseObject> registration(@RequestBody User user) {
@@ -77,4 +86,10 @@ public class LoginController {
         );
     }
 
+    @GetMapping("/current-user")
+    public ResponseEntity<ResponseObject> getCurrentUser() {
+        return ResponseEntity.ok(
+                new ResponseObject(getUser().getEmail(), "Get current user id success", StatusCode.SUCCESS)
+        );
+    }
 }
