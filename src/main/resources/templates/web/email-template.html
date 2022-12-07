@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:remove="all">Reset Password Email Template</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+    <meta content="Reset Password Email Template." name="description">
+    <style type="text/css">
+        a:hover {
+            text-decoration: underline !important;
+        }
+    </style>
+</head>
+
+<body leftmargin="0" marginheight="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" topmargin="0">
+<!--100% body table-->
+<table bgcolor="#f2f3f8" border="0" cellpadding="0" cellspacing="0"
+       style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;"
+       width="100%">
+    <tr>
+        <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0"
+                   style="background-color: #f2f3f8; max-width:670px;  margin:0 auto;" width="100%">
+                <tr>
+                    <td style="height:80px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="height:20px;">&nbsp;</td>
+                </tr>
+                <tr>
+
+                    <td>
+                        <table align="center" border="0" cellpadding="0" cellspacing="0"
+                               style="max-width:670px;background:#fff; border-radius:3px;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);"
+                               width="95%">
+                            <tr>
+                                <td>
+                                    <p style="text-align: center;margin: 20px;">
+                                        <a href="https://localhost:8080" target="_blank" title="logo">
+                                            <img alt="logo"
+                                                 src="https://f8-zpcloud.zdn.vn/537647271052283426/116311ccb7ee6eb037ff.jpg"
+                                                 title="logo" width="80">
+                                        </a>
+                                    </p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0 35px;">
+                                    <h1
+                                            style="color:#1e1e2d; font-weight:600; margin:0;font-size:20px;font-family:'Rubik',sans-serif;">
+                                        You have
+                                        requested to reset your password</h1>
+                                    <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px;">
+                                        Bellow
+                                        you can
+                                        find you temporary password</p>
+                                    <hr>
+                                    <p style="text-align: center; margin: 40px 0">
+                                        <span style="background-color: #ffcc0b;color: #595a5e; font-size: 30px; padding: 5px 10px;font-weight: 600;"
+                                              th:utext="${password}">XXXXXX</span>
+                                    </p>
+                                    <hr>
+                                    <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px;">
+                                        If you have questions about how to change your password, visit out <a href="#!">Help
+                                        Center.</a></p>
+                                    <p style="color:#455056; font-size:15px;line-height:24px; margin-top:10px;">
+                                        Thank you very much! </p>
+                                    <p style="text-align: center;">
+                                        <a style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;"
+                                           th:href="@{'http://localhost:8080/login'}">Login
+                                            to your account</a>
+                                    </p>
+
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="height:40px;">&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                <tr>
+                    <td style="height:20px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;">
+                        <p
+                                style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">
+                            &copy; <strong>www.metabook.com</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height:80px;">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!--/100% body table-->
+</body>
+
+</html>

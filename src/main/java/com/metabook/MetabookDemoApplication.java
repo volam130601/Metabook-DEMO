@@ -12,11 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @SpringBootApplication
 public class MetabookDemoApplication implements CommandLineRunner {
     @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
         SpringApplication.run(MetabookDemoApplication.class, args);
@@ -32,4 +32,5 @@ public class MetabookDemoApplication implements CommandLineRunner {
             System.out.println("Create account admin success!");
         }
     }
+
 }

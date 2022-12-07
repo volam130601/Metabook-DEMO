@@ -8,3 +8,25 @@ spring:
     password: 870124zxc
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_metabook
     driver-class-name: com.mysql.cj.jdbc.Driver
+  thymeleaf:
+    cache: false #Delete cache khong can thiet
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: lamlbx123@gmail.com
+    password: luufgkshgskqyisr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: false
+    protocol: smtp
+    test-connection: false
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB

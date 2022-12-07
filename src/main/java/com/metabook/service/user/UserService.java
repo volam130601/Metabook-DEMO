@@ -7,7 +7,14 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
 
-    User register(User user);
+    User findByEmail(String email);
 
     int enableAccount(User user);
+
+    User register(User user);
+
+    User save(User user);
+
+    boolean existsUserByEmail(String email);
+
 }

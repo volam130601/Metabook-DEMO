@@ -1,10 +1,15 @@
 package com.metabook.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.metabook.entity.post.Post;
+import com.metabook.entity.post.PostLike;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -13,7 +18,7 @@ import java.util.Date;
 @Builder
 @Table(name = "users",
         uniqueConstraints = {@UniqueConstraint(name = "UN_Email", columnNames = "email")})
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,29 +29,52 @@ public class User {
     private Integer phoneNumber;
     private String firstName;
     private String lastName;
+    @Transient
     private String fullName;
+    private boolean gender = true;
+    private Date birthDay;
+    private String country;
+    private boolean isEnabled = false;
+    private String avatar;
+    @CreatedDate
+    private Date createAt;
+    private Date updateAt;
+    @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Role role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Story> storyList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Post> postList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<PostLike> postLikeList;
+
+
+    @Transient
+    private String newEmail;
+
+    @Transient
+    private String newPassword;
+
 
     public String getFullName() {
         return firstName + " " + lastName;
     }
 
-    private boolean gender = true;
-
     public String getGender() {
         return (gender) ? "Male" : "Female";
     }
-
-    private Date birthDay;
-    private String country;
-
-    private boolean isEnabled = false;
-
-    @CreatedDate
-    private Date createAt;
-    private Date updateAt;
-
-    @ManyToOne
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Role role;
 }
