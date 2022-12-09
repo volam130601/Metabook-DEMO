@@ -1,4 +1,4 @@
-package com.metabook.repository;
+package com.metabook.repository.post;
 
 import com.metabook.entity.post.PostImage;
 import org.springframework.data.jpa.repository.JpaRepository;

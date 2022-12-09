@@ -5,9 +5,9 @@ import com.metabook.dto.StatusCode;
 import com.metabook.entity.post.Post;
 import com.metabook.entity.post.PostImage;
 import com.metabook.entity.post.PostLike;
-import com.metabook.repository.PostImageRepository;
-import com.metabook.repository.PostLikeRepository;
-import com.metabook.repository.PostRepository;
+import com.metabook.repository.comment.CommentRepository;
+import com.metabook.service.post.PostLikeService;
+import com.metabook.service.post.PostService;
 import com.metabook.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +21,16 @@ import java.util.List;
 
 import static com.metabook.controller.web.LoginController.getUser;
 
-@RestController()
+@RestController
 @RequestMapping("/api/post")
 public class PostController {
     @Autowired
-    PostRepository postRepository;
+    private PostService postService;
     @Autowired
-    PostImageRepository postImageRepository;
+    private PostLikeService postLikeService;
 
     @Autowired
-    PostLikeRepository postLikeRepository;
-
+    private CommentRepository commentRepository;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseObject> postCreate(@RequestParam("file") MultipartFile[] fileList,
@@ -41,7 +40,7 @@ public class PostController {
                 .user(getUser())
                 .createAt(new Date())
                 .build();
-        post = postRepository.save(post);
+        post = postService.save(post);
         List<PostImage> postImages = new ArrayList<>();
         for (MultipartFile multipartFile : fileList) {
             String fileName = multipartFile.getOriginalFilename();
@@ -50,7 +49,7 @@ public class PostController {
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         }
         post.setPostImages(postImages);
-        postRepository.save(post);
+        postService.save(post);
         return ResponseEntity.ok(
                 new ResponseObject(null, "Post create is success", StatusCode.SUCCESS)
         );
@@ -60,16 +59,17 @@ public class PostController {
     @GetMapping("/getTop2")
     public ResponseEntity<ResponseObject> getPostTop2() {
         return ResponseEntity.ok(
-                new ResponseObject(postRepository.findAll(), "GET Post News is success", StatusCode.SUCCESS)
+                new ResponseObject(postService.findAll(), "GET Post News is success", StatusCode.SUCCESS)
         );
     }
 
     //Haven't done
     @GetMapping("/getAll")
     public ResponseEntity<ResponseObject> getPostAll() {
-        List<Post> postList = postRepository.findAll();
+        List<Post> postList = postService.findAll();
         for (Post post : postList) {
-            post.setCountLikes(postLikeRepository.countPostLikeByPostId(post.getId()));
+            post.setCountLikes(postLikeService.countPostLikeByPostId(post.getId()));
+            post.setCountComments(commentRepository.countByPostId(post.getId()));
         }
         return ResponseEntity.ok(
                 new ResponseObject(postList, "GET Post News is success", StatusCode.SUCCESS)
@@ -78,13 +78,13 @@ public class PostController {
 
     @GetMapping("/like/{postId}")
     public ResponseEntity<ResponseObject> likeByPostId(@PathVariable("postId") Long postId) {
-        if (!postLikeRepository.existsPostLikeByUserIdAndPostId(getUser().getId(), postId)) {
-            postLikeRepository.save(PostLike.builder()
+        if (!postLikeService.existsPostLikeByUserIdAndPostId(getUser().getId(), postId)) {
+            postLikeService.save(PostLike.builder()
                     .user(getUser())
-                    .post(postRepository.findById(postId).get())
+                    .post(postService.findById(postId))
                     .build());
             return ResponseEntity.ok(
-                    new ResponseObject(postLikeRepository.countPostLikeByPostId(postId), "Like post is success", StatusCode.SUCCESS)
+                    new ResponseObject(postLikeService.countPostLikeByPostId(postId), "Like post is success", StatusCode.SUCCESS)
             );
         }
         return ResponseEntity.ok(
@@ -94,10 +94,10 @@ public class PostController {
 
     @GetMapping("/dislike/{postId}")
     public ResponseEntity<ResponseObject> dislikeByPostId(@PathVariable("postId") Long postId) {
-        if (postLikeRepository.existsPostLikeByUserIdAndPostId(getUser().getId(), postId)) {
-            postLikeRepository.dislikePostByUserId(getUser().getId(), postId);
+        if (postLikeService.existsPostLikeByUserIdAndPostId(getUser().getId(), postId)) {
+            postLikeService.dislikePostByUserId(getUser().getId(), postId);
             return ResponseEntity.ok(
-                    new ResponseObject(postLikeRepository.countPostLikeByPostId(postId), "Dislike post is success", StatusCode.SUCCESS)
+                    new ResponseObject(postLikeService.countPostLikeByPostId(postId), "Dislike post is success", StatusCode.SUCCESS)
             );
         }
         return ResponseEntity.ok(
@@ -108,7 +108,7 @@ public class PostController {
     @GetMapping("/user-like-post")
     public ResponseEntity<ResponseObject> userLikePost() {
         return ResponseEntity.ok(
-                new ResponseObject(postLikeRepository.findAllByUserId(getUser().getId()), "Get user like post is Success", StatusCode.SUCCESS)
+                new ResponseObject(postLikeService.findAllByUserId(getUser().getId()), "Get user like post is Success", StatusCode.SUCCESS)
         );
     }
 

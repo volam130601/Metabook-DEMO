@@ -1,6 +1,8 @@
 package com.metabook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.metabook.entity.comment.Comment;
+import com.metabook.entity.comment.CommentLike;
 import com.metabook.entity.post.Post;
 import com.metabook.entity.post.PostLike;
 import lombok.*;
@@ -25,6 +27,8 @@ public class User implements Serializable {
     @Column(nullable = false, length = 50)
     private String email;
     @Column(nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private String password;
     private Integer phoneNumber;
     private String firstName;
@@ -62,7 +66,17 @@ public class User implements Serializable {
     @JsonIgnore
     private List<PostLike> postLikeList;
 
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Comment> commentList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<CommentLike> commentLikes;
     @Transient
     private String newEmail;
 

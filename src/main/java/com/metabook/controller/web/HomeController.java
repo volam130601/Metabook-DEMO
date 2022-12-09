@@ -1,8 +1,8 @@
 package com.metabook.controller.web;
 
 import com.metabook.entity.User;
-import com.metabook.repository.PostRepository;
 import com.metabook.repository.StoryRepository;
+import com.metabook.repository.post.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

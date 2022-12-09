@@ -176,6 +176,10 @@
     -webkit-text-stroke-color: greenyellow;
 }
 
+.text-underline:hover {
+    text-decoration: underline;
+}
+
 .shadow-around {
     box-shadow: 0 1px 8px 5px #dddfe2;
 }
@@ -667,7 +671,7 @@ hr {
 
 .comment-detail {
     background-color: var(--bg-grey);
-    width: 100%;
+    max-width: 420px;
     border-radius: 20px;
     padding: 5px 15px;
 }
@@ -995,4 +999,38 @@ hr {
 
 .post-like-icon img {
     margin-right: -7px;
+}
+
+/* POST Comment New*/
+.textarea {
+    display: block;
+    overflow: hidden;
+    min-height: 40px;
+    line-height: 20px;
+    resize: none;
+    border-radius: 20px;
+}
+
+.textarea[contenteditable]:empty::before {
+    content: "Enter comment...";
+    color: rgb(167, 162, 162);
+}
+
+.comment-new-active::after {
+    position: absolute;
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: #000;
+}
+
+.like-comment {
+    bottom: -10px;
+    right: 0;
+    line-height: 15px;
+    padding: 1px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 15px;
 }

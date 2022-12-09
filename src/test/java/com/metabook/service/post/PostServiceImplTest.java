@@ -2,8 +2,8 @@ package com.metabook.service.post;
 
 import com.metabook.entity.post.Post;
 import com.metabook.entity.post.PostImage;
-import com.metabook.repository.PostImageRepository;
-import com.metabook.repository.PostRepository;
+import com.metabook.repository.post.PostImageRepository;
+import com.metabook.repository.post.PostRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

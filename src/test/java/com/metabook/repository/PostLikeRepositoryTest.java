@@ -1,6 +1,8 @@
 package com.metabook.repository;
 
 import com.metabook.entity.post.PostLike;
+import com.metabook.repository.post.PostLikeRepository;
+import com.metabook.repository.post.PostRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
