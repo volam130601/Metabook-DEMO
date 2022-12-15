@@ -92,6 +92,10 @@
     width: 40px !important;
 }
 
+.w-50px {
+    width: 50px !important;
+}
+
 .h-30px {
     height: 30px !important;
 }
@@ -102,6 +106,10 @@
 
 .h-40px {
     height: 40px !important;
+}
+
+.h-50px {
+    height: 50px !important;
 }
 
 .h-60px {
@@ -137,6 +145,22 @@
 .hw-50px {
     height: 50px;
     width: 50px;
+}
+
+.top-0 {
+    top: 0;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
+.right-0 {
+    right: 0;
+}
+
+.left-0 {
+    left: 0;
 }
 
 .p-0-5px {
@@ -365,7 +389,8 @@ hr {
 .sidebar-scrollbar::-webkit-scrollbar-track,
 #story-paint::-webkit-scrollbar-track,
 #post-create__input::-webkit-scrollbar-track,
-#post-create-body::-webkit-scrollbar-track {
+#post-create-body::-webkit-scrollbar-track,
+#edit-account-body::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #f8f9fa;
     margin-top: -20px;
@@ -375,7 +400,8 @@ hr {
 .sidebar-scrollbar::-webkit-scrollbar,
 #story-paint::-webkit-scrollbar,
 #post-create__input::-webkit-scrollbar,
-#post-create-body::-webkit-scrollbar {
+#post-create-body::-webkit-scrollbar,
+#edit-account-body::-webkit-scrollbar {
     width: 10px;
     background-color: #f8f9fa;
 }
@@ -383,10 +409,12 @@ hr {
 .sidebar-scrollbar::-webkit-scrollbar-thumb,
 #story-paint::-webkit-scrollbar-thumb,
 #post-create__input::-webkit-scrollbar-thumb,
-#post-create-body::-webkit-scrollbar-thumb {
+#post-create-body::-webkit-scrollbar-thumb,
+#edit-account-body::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #9c9797;
 }
+
 
 /* Slider */
 .slideshow {
@@ -1033,4 +1061,62 @@ hr {
     align-items: center;
     justify-content: space-between;
     border-radius: 15px;
+}
+
+/* My account */
+.account-image {
+    position: relative;
+}
+
+.account-cover-img {
+    height: 150px;
+}
+
+.account-avatar {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    transform: translateX(calc(198px - 40px));
+}
+
+.account-avatar img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+
+.account-avatar i {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #fffdfd;
+    padding: 4px;
+    border-radius: 100%;
+    border: 1px solid var(--bg-grey-1);
+    color: #aaa;
+}
+
+.account-avatar label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-bottom-right-radius: 13px;
+    border-bottom-left-radius: 40px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.form-check-input {
+    width: 20px;
+}
+
+.form-check-input:hover {
+    border-color: rgb(11, 82, 212);
+}
+
+#edit-account-body {
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

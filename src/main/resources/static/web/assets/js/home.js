@@ -89,9 +89,10 @@ if ($toast.includes('login?error')) {
         text: "Invalid email or password",
         heading: "Message",
         icon: "error",
-        showHideTransition: "plain",
+        showHideTransition: "slide",
         allowToastClose: "true",
         hideAfter: "2000",
+        loader: false,
         position: "top-right",
         loaderBg: '#ef3a5d'
     });
@@ -101,9 +102,10 @@ if ($toast.includes('login?logout')) {
         text: "You have been logged out.",
         heading: "Message",
         icon: "success",
-        showHideTransition: "plain",
+        showHideTransition: "slide",
         allowToastClose: "true",
         hideAfter: "2000",
+        loader: false,
         position: "top-right",
         loaderBg: '#ef3a5d'
     });
@@ -233,22 +235,23 @@ function checkEmailExist(param) {
 }
 
 function sendRegistration(data) {
+    console.log(data)
     $.post({
         url: "/api/registration",
         data: data,
         dataType: "json",
         contentType: "application/json",
         success: function (res) {
-            console.log(res)
             if (res.status === "success") {
                 $('#create_account').modal('toggle')
                 $.toast({
                     text: "Registration is success",
                     heading: "Message",
                     icon: "success",
-                    showHideTransition: "plain",
+                    showHideTransition: "slide",
                     allowToastClose: "true",
                     hideAfter: "2000",
+                    loader: false,
                     position: "top-right",
                     loaderBg: '#ef3a5d'
                 });
@@ -288,21 +291,23 @@ $('#formForgotPassword').submit(function (e) {
                 if (res.status === 'success')
                     $.toast({
                         text: res.message,
-                        heading: "Note",
+                        heading: "Message",
                         icon: "success",
-                        showHideTransition: "plain",
+                        showHideTransition: "slide",
                         allowToastClose: "true",
                         hideAfter: "2000",
+                        loader: false,
                         position: "top-right",
                         loaderBg: '#ef3a5d'
                     });
                 else $.toast({
                     text: res.message,
-                    heading: "Note",
+                    heading: "Message",
                     icon: "error",
-                    showHideTransition: "plain",
+                    showHideTransition: "slide",
                     allowToastClose: "true",
                     hideAfter: "2000",
+                    loader: false,
                     position: "top-right",
                     loaderBg: '#ef3a5d'
                 });
@@ -319,3 +324,357 @@ $('#formForgotPassword').submit(function (e) {
     }
 })
 
+//Show edit account
+function showEditAccount() {
+    const $editFooterBtn = $('#edit-account-btn')
+    const $editAccountBody = $('#edit-account-body')
+    $editFooterBtn.removeClass('d-none').addClass('d-flex')
+    $editAccountBody.removeClass('d-none')
+
+    const $accountBody = $(".account-body")
+    const $accountBtn = $('#account-btn')
+    $accountBody.addClass('d-none')
+    $accountBtn.addClass('d-none')
+}
+
+function hideEdit() {
+    const $editFooterBtn = $('#edit-account-btn')
+    const $editAccountBody = $('#edit-account-body')
+    $editFooterBtn.removeClass('d-flex').addClass('d-none')
+    $editAccountBody.addClass('d-none')
+
+    const $accountBody = $(".account-body")
+    const $accountBtn = $('#account-btn')
+    $accountBody.removeClass('d-none')
+    $accountBtn.removeClass('d-none')
+}
+
+function cancelEdit() {
+    hideEdit()
+}
+
+//Upload avatar user
+$('#btn-my-account').click(function (e) {
+    e.preventDefault()
+    let user
+    $.get({
+        url: '/api/current-user',
+        async: false,
+        success: function (res) {
+            if (res.status === 'success') {
+                user = res.data
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
+    const accountImage = `<div class="w-100">
+                                <img alt="" class="account-cover-img w-100" src="${user.coverImgPath}">
+                                <label class="position-absolute top-0 left-0 bg-transparent h-100 w-100 cursor-pointer"
+                                       for="upload-cover-img"></label>
+                                <input hidden id="upload-cover-img" type="file"  onchange="uploadCoverImg(event)">
+                            </div>
+                            <div class="account-avatar">
+                                <img alt="" class="account-avatar-img" src="${user.avatarPath}">
+                                <i class="fa-solid fa-camera"></i>
+                                <label class="bg-transparent h-100 w-100 cursor-pointer"
+                                       for="upload-avatar-user"></label>
+                                <input hidden id="upload-avatar-user" type="file"  onchange="uploadAvatarUser(event)">
+                            </div>`
+
+    $('#modal-account-information').html(`
+    <div class="modal-header">
+                <h5 class="font-weight-bold" id="userProfileModalLabel">My account</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body  p-0">
+                <div class="account-body">
+                    <div class="account-image">
+                        <div class="w-100">
+                            <img alt="" class="account-cover-img w-100" src="${user.coverImgPath}">
+                        </div>
+                        <div class="account-avatar">
+                            <img alt="" class="account-avatar-img" src="${user.avatarPath}">
+                        </div>
+                    </div>
+                    <p class="text-center mt-5 fs-5 font-weight-bold">${user.fullName}</p>
+                    <div class="p-3">
+
+                        <label class="fs-4 font-weight-bold">Personal information</label>
+
+                        <div class="d-flex align-content-center fs-3">
+                            <label class=" text-muted" style="width: 100px;">Email</label>
+                            <span>${user.email}</span>
+                        </div>
+
+                        <div class="d-flex align-content-center fs-3">
+                            <label class=" text-muted" style="width: 100px;">Gender</label>
+                            <span>${user.gender}</span>
+                        </div>
+
+                        <div class="d-flex align-content-center fs-3">
+                            <label class=" text-muted" style="width: 100px;">Birthday</label>
+                            <span>${user.strBirthDay}</span>
+                        </div>
+
+                        <div class="d-flex align-content-center fs-3">
+                            <label class=" text-muted" style="width: 100px;">Phone number</label>
+                            <span >${user.phoneNumber}</span>
+                        </div>
+
+                        <div class="d-flex align-content-center fs-3">
+                            <label class=" text-muted" style="width: 100px;">Country</label>
+                            <span >${user.country}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-none" id="edit-account-body" style="height: 450px;">
+                    <form id="formEditAccount">
+                        <div class="account-image">
+                            ${accountImage}
+                        </div>
+                        <div class="pl-3 pr-3">
+                            <div class="form-group mt-5">
+                                <label class="fs-3 font-weight-bold" for="fullName">Display name</label>
+                                <input aria-describedby="fullNameId" class="form-control" id="fullName" name="fullName"
+                                       placeholder="Enter display name" value="${user.fullName}" type="text">
+                                <small class="form-text text-muted fs-1" id="fullNameId">Use your real name to make it
+                                    easier
+                                    for friends to identify.</small>
+                            </div>
+                            <div class="bg-grey-1 w-100" style="height: 10px;"></div>
+                            <div class="fs-3 font-weight-bold mt-2">Personal information</div>
+
+                            <label class="form-check-label mt-2 fs-3">Gender</label>
+                            <div class="row ml-2">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input checked class="form-check-input"
+                                               name="gender" 
+                                               type="radio"
+                                               value="true">
+                                       
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="form-check ml-3">
+                                    <label class="form-check-label">
+                                        <input  class="form-check-input"
+                                               name="gender" type="radio"
+                                               value="false">
+                                        Female
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <label class=" fs-3" for="birthday">Birthday</label>
+                                <input class="form-control" id="birthday"
+                                       name="birthday" value="${user.strBirthDay}" type="date">
+                                <small class="form-text text-muted fs-1" id="birthdayId"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="fs-3" for="country">Country</label>
+                                <input class="form-control" id="country" name="country" placeholder="Enter country"
+                                       value="${user.country}" type="text">
+                                <small class="form-text text-muted fs-1" id="countryId"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="fs-3" for="phoneNumber">Phone number</label>
+                                <input class="form-control" id="phoneNumber" name="phoneNumber"
+                                       placeholder="Enter phone number"
+                                       value="${user.phoneNumber}" type="text">
+                                <small class="form-text text-muted fs-1" id="phoneNumberId"></small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary w-100" id="account-btn" onclick="showEditAccount()" type="button">
+                    Update information
+                </button>
+
+                <div class="d-none" id="edit-account-btn">
+                    <button class="btn btn-secondary" onclick="cancelEdit()" type="button">Cancel</button>
+                    <button class="btn btn-primary ml-2" onclick="saveEditAccount()" type="button">Post</button>
+                </div>
+            </div>
+    `)
+})
+
+let formDataEditAccount = new FormData()
+
+function uploadAvatarUser(event) {
+    // var output = $('#upload-avatar-user');
+    const file = event.target.files[0];
+    if (file) {
+        formDataEditAccount.append('avatar-img', file)
+        let reader = new FileReader();
+        reader.onload = function (event) {
+            console.log(event.target.result)
+            $('.account-avatar-img').attr("src", event.target.result)
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+function uploadCoverImg(event) {
+    // var output = $('#upload-avatar-user');
+    const file = event.target.files[0];
+    if (file) {
+        formDataEditAccount.append('cover-img', file)
+        let reader = new FileReader();
+        reader.onload = function (event) {
+            console.log(event.target.result)
+            $('.account-cover-img').attr("src", event.target.result)
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+// $('#upload-avatar-user').change(function (e) {
+//     const file = this.files[0];
+//     if (file) {
+//         formDataEditAccount.append('avatar-img', file)
+//         let reader = new FileReader();
+//         reader.onload = function (event) {
+//             console.log(event.target.result)
+//             $('.account-avatar-img').attr("src", event.target.result)
+//         }
+//         reader.readAsDataURL(file);
+//     }
+// })
+// $('#upload-cover-img').change(function (e) {
+//     const file = this.files[0];
+//     if (file) {
+//         formDataEditAccount.append('cover-img', file)
+//         let reader = new FileReader();
+//         reader.onload = function (event) {
+//             console.log(event.target.result)
+//             $('.account-cover-img').attr("src", event.target.result)
+//         }
+//         reader.readAsDataURL(file);
+//     }
+// })
+
+const $smallFullName = $('#fullNameId')
+const $inputFullName = $('#fullName')
+const $smallBirthDay = $('#birthdayId')
+const $inputBirthDay = $('#birthday')
+const $smallCountry = $('#countryId')
+const $inputCountry = $('#country')
+const $smallPhoneNumber = $('#phoneNumberId')
+const $inputPhoneNumber = $('#phoneNumber')
+
+function clearValid() {
+    $smallFullName.html('Use your real name to make it easier for friends to identify').addClass('text-muted').removeClass('text-danger')
+    $inputFullName.removeClass('border-danger')
+    $smallBirthDay.html('').addClass('text-muted').removeClass('text-danger')
+    $inputBirthDay.removeClass('border-danger')
+    $smallPhoneNumber.html('').addClass('text-muted').removeClass('text-danger')
+    $inputPhoneNumber.removeClass('border-danger')
+    $smallCountry.html('').addClass('text-muted').removeClass('text-danger')
+    $inputCountry.removeClass('border-danger')
+}
+
+$($inputFullName).click(function (e) {
+    $smallFullName.html('Use your real name to make it easier for friends to identify').addClass('text-muted').removeClass('text-danger')
+    $inputFullName.removeClass('border-danger')
+});
+$($inputBirthDay).click(function (e) {
+    $smallBirthDay.html('').addClass('text-muted').removeClass('text-danger')
+    $inputBirthDay.removeClass('border-danger')
+});
+$($inputPhoneNumber).click(function (e) {
+    $smallPhoneNumber.html('').addClass('text-muted').removeClass('text-danger')
+    $inputPhoneNumber.removeClass('border-danger')
+});
+$($inputCountry).click(function (e) {
+    $smallCountry.html('').addClass('text-muted').removeClass('text-danger')
+    $inputCountry.removeClass('border-danger')
+});
+
+function saveEditAccount() {
+    //COde here
+    const data = $('#formEditAccount').serializeArray()
+    // console.log(data)
+    const values = {}
+    let flag = 0
+    clearValid()
+    $.each(data, function (i, field) {
+        if (field.name == "fullName") {
+            if (field.value == "") {
+                $smallFullName.html('Full name is invalid').addClass('text-danger').removeClass('text-muted')
+                $inputFullName.addClass('border-danger')
+                flag = 1
+            } else {
+                values[field.name] = field.value
+            }
+        }
+        if (field.name == "gender") {
+            values[field.name] = field.value
+        }
+        if (field.name == "birthday") {
+            if (field.value == "") {
+                $smallBirthDay.html('Birthday is invalid').addClass('text-danger').removeClass('text-muted')
+                $inputBirthDay.addClass('border-danger')
+                flag = 1
+            } else {
+                values[field.name] = field.value
+            }
+        }
+        if (field.name == "country") {
+            if (field.value == "") {
+                $smallCountry.html('Birthday is invalid').addClass('text-danger').removeClass('text-muted')
+                $inputCountry.addClass('border-danger')
+                flag = 1
+            } else {
+                values[field.name] = field.value
+            }
+        }
+        if (field.name == "phoneNumber") {
+            if (field.value == "") {
+                $smallPhoneNumber.html('Birthday is invalid').addClass('text-danger').removeClass('text-muted')
+                $inputPhoneNumber.addClass('border-danger')
+                flag = 1
+            } else {
+                values[field.name] = field.value
+            }
+        }
+    });
+    if (flag === 0) {
+        console.log('success')
+        formDataEditAccount.append('data', JSON.stringify(values))
+        $.post({
+            url: "/api/user/edit",
+            data: formDataEditAccount,
+            enctype: 'multipart/form-data',
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.status === 'success') {
+                    $.toast({
+                        text: res.message,
+                        heading: "Message",
+                        icon: res.status,
+                        showHideTransition: "slide",
+                        allowToastClose: "true",
+                        hideAfter: "2000",
+                        position: "top-right",
+                        loader: false
+                    });
+                    $('#userProfileModal').modal('toggle')
+                }
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        });
+    }
+}

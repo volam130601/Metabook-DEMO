@@ -1,4 +1,4 @@
-package com.metabook.dto;
+package com.metabook.dto.comment;
 
 import lombok.Builder;
 import lombok.Data;

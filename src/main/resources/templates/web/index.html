@@ -10,7 +10,7 @@
 <body class="bg-content">
 <nav class="navbar navbar-expand-sm navbar-white bg-white shadow-sm fixed-top">
     <a class="" href="#">
-        <img alt="" th:src="@{/web/image/metabook.png}" width="40"/></a>
+        <img alt="" class="w-40px h-40px img-cover rounded-circle" th:src="@{/web/image/metabook.png}"/></a>
     <div class="navbar-search mr-auto">
         <i aria-hidden="true" class="fa fa-search search-icon"></i>
         <input class="search-input" placeholder="Search in Metabook" type="text"/>
@@ -36,12 +36,13 @@
                 <div class="bell-report">10+</div>
             </a>
             <div class="dropdown">
-                <img alt=""
-                     aria-expanded="false" aria-haspopup="true"
-                     class="dropdown-toggle" data-toggle="dropdown"
-                     id="dropdownMenuButton" th:src="@{/web/image/avatar_batman.png}" width="40">
+                <img alt="" aria-expanded="false"
+                     aria-haspopup="true"
+                     class="dropdown-toggle w-40px h-40px img-cover rounded-circle" data-toggle="dropdown"
+                     id="dropdownMenuButton" th:src="@{${user.getAvatarPath()}}">
                 <div aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-right mt-2 shadow-sm">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" data-target="#userProfileModal" data-toggle="modal" href="#!"
+                       id="btn-my-account">
                         <i aria-hidden="true" class="fa fa-user mr-1 bg-grey p-2 rounded-circle"></i>
                         My account
                     </a>
@@ -66,8 +67,9 @@
                 <div class="sidebar mt-3 sidebar-scrollbar">
                     <div class="sidebar-item">
                         <img alt=""
-                             class="sidebar-item__img" th:src="@{/web/image/avatar_batman.png}">
-                        <a class="sidebar-item__link" href="">Bat Man </a>
+                             class="sidebar-item__img w-40px h-40px img-cover rounded-circle"
+                             th:src="@{${user.getAvatarPath()}}">
+                        <a class="sidebar-item__link" href="" th:utext="${user.fullName}"></a>
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
@@ -106,8 +108,8 @@
                         <div class="mySlides">
                             <div class="story-create-info cursor-pointer">
                                 <img alt=""
-                                     class="story-create-info__img"
-                                     th:src="@{/web/image/story/zoro.jpg}">
+                                     class="story-create-info__img img-cover"
+                                     th:src="@{${user.getAvatarPath()}}">
                                 <span class="story-create-info__icon cursor-pointer"><i
                                         aria-hidden="true" class="fa fa-plus cursor-pointer"></i></span>
                                 <span class="story-create-info__name cursor-pointer">Create Story</span>
@@ -118,13 +120,13 @@
                                     onclick="" th:onclick="'showStoryNews('+${stat.index + 1}+')'">
                                 <div class="story-card">
                                     <img alt=""
-                                         class="story-card__img"
+                                         class="story-card__img img-cover"
                                          th:src="@{${story.getImagePath()}}">
                                     <img alt=""
-                                         class="story-avatar"
-                                         th:src="@{/web/image/story/avatar_batman.png}" width="40">
+                                         class="story-avatar h-40px w-40px img-cover rounded-circle"
+                                         th:src="@{${story.user.getAvatarPath()}}" width="40">
                                     <span class="story-name text-white "
-                                          th:utext="${story.getUser().getFullName()}"></span>
+                                          th:utext="${story.user.fullName}"></span>
                                 </div>
                             </button>
                         </div>
@@ -139,8 +141,8 @@
             <div class="card content mt-3">
                 <div class="create-post">
                     <div class="d-flex mt-3 ml-3">
-                        <img alt=""
-                             th:src="@{/web/image/avatar_batman.png}" width="40">
+                        <img alt="" class="h-40px w-40px img-cover rounded-circle"
+                             th:src="@{${user.avatarPath}}">
                         <input class="ml-3 mr-3 create-post__input btn-focus" data-target="#postCreateModal"
                                data-toggle="modal" placeholder="What do you think?" readonly="readonly" type="text">
                     </div>
@@ -231,11 +233,11 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex align-content-center">
-                    <img alt="" class="hw-50px rounded-circle img-cover" th:src="@{/web/image/zoro.jpg}">
+                    <img alt="" class="hw-50px rounded-circle img-cover" th:src="@{${user.avatarPath}}">
                     <div class="d-flex flex-column ml-2">
-                        <div class="fs-4 font-weight-bold">Võ Lâm</div>
+                        <div class="fs-4 font-weight-bold" th:utext="${user.fullName}"></div>
                         <button class="bg-grey-1 border-0 rounded fs-3 font-weight-bold text-muted">
-                            <!--                            <i class="fa-solid fa-lock fs-3 mr-1"></i>-->
+                            <!-- <i class="fa-solid fa-lock fs-3 mr-1"></i>-->
                             <i class="fa-solid fa-earth-americas"></i>
                             <span>Global</span>
                             <i class="fa-solid fa-sort-down ml-1"></i>
@@ -279,6 +281,155 @@
             <div class="modal-footer">
                 <button class="btn btn-primary w-100" onclick="postContent()" type="button">Post</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--  User profile Modal  -->
+<div aria-hidden="true" aria-labelledby="userProfileModalLabel" class="modal fade" id="userProfileModal"
+     style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
+    <div class="modal-dialog" style="width: 400px; margin-top: 10px; margin-bottom: 10px;">
+        <div class="modal-content" id="modal-account-information">
+            <!-- <div class="modal-header">
+                 <h5 class="font-weight-bold" id="userProfileModalLabel">My account</h5>
+                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body  p-0">
+                 <div class="account-body">
+                     <div class="account-image">
+                         <div class="w-100">
+                             <img alt="" class="account-cover-img w-100" th:src="${user.coverImgPath}">
+                         </div>
+                         <div class="account-avatar">
+                             <img alt="" class="account-avatar-img" th:src="${user.avatarPath}">
+                         </div>
+                     </div>
+                     <p class="text-center mt-5 fs-5 font-weight-bold" th:utext="${user.fullName}"></p>
+                     <div class="p-3">
+
+                         <label class="fs-4 font-weight-bold">Personal information</label>
+
+                         <div class="d-flex align-content-center fs-3">
+                             <label class=" text-muted" style="width: 100px;">Email</label>
+                             <span th:utext="${user.email}"></span>
+                         </div>
+
+                         <div class="d-flex align-content-center fs-3">
+                             <label class=" text-muted" style="width: 100px;">Gender</label>
+                             <span th:utext="${user.getGender()}"></span>
+                         </div>
+
+                         <div class="d-flex align-content-center fs-3">
+                             <label class=" text-muted" style="width: 100px;">Birthday</label>
+                             <span th:utext="${user.getStrBirthDay()}"></span>
+                         </div>
+
+                         <div class="d-flex align-content-center fs-3">
+                             <label class=" text-muted" style="width: 100px;">Phone number</label>
+                             <span th:utext="${user.phoneNumber}"></span>
+                         </div>
+
+                         <div class="d-flex align-content-center fs-3">
+                             <label class=" text-muted" style="width: 100px;">Country</label>
+                             <span th:utext="${user.country}"></span>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="d-none" id="edit-account-body" style="height: 450px;">
+                     <form id="formEditAccount">
+                         <div class="account-image">
+                             <div class="w-100">
+                                 <img alt="" class="account-cover-img w-100" th:src="${user.coverImgPath}">
+                                 <label class="position-absolute top-0 left-0 bg-transparent h-100 w-100 cursor-pointer"
+                                        for="upload-cover-img"></label>
+                                 <input hidden id="upload-cover-img" type="file">
+                             </div>
+                             <div class="account-avatar">
+                                 <img alt="" class="account-avatar-img" th:src="${user.avatarPath}">
+                                 <i class="fa-solid fa-camera"></i>
+                                 <label class="bg-transparent h-100 w-100 cursor-pointer"
+                                        for="upload-avatar-user"></label>
+                                 <input hidden id="upload-avatar-user" type="file">
+                             </div>
+                         </div>
+                         <div class="pl-3 pr-3">
+                             <div class="form-group mt-5">
+                                 <label class="fs-3 font-weight-bold" for="fullName">Display name</label>
+                                 <input aria-describedby="fullNameId" class="form-control" id="fullName" name="fullName"
+                                        placeholder="Enter display name" th:value="${user.fullName}" type="text">
+                                 <small class="form-text text-muted fs-1" id="fullNameId">Use your real name to make it
+                                     easier
+                                     for friends to identify.</small>
+                             </div>
+                             <div class="bg-grey-1 w-100" style="height: 10px;"></div>
+                             <div class="fs-3 font-weight-bold mt-2">Personal information</div>
+
+                             <label class="form-check-label mt-2 fs-3">Gender</label>
+                             <div class="row ml-2">
+                                 <th:block></th:block>
+                                 <div class="form-check">
+                                     <label class="form-check-label">
+                                         <input checked class="form-check-input"
+                                                name="gender" th:if="${user.getGender().equals('Male')}"
+                                                type="radio"
+                                                value="true">
+                                         <input class="form-check-input" name="gender"
+                                                th:unless="${user.getGender().equals('Male')}"
+                                                type="radio"
+                                                value="true">
+                                         Male
+                                     </label>
+                                 </div>
+                                 <div class="form-check ml-3">
+                                     <label class="form-check-label">
+                                         <input checked class="form-check-input"
+                                                name="gender" th:if="${user.getGender().equals('Female')}" type="radio"
+                                                value="false">
+                                         <input class="form-check-input" name="gender"
+                                                th:unless="${user.getGender().equals('Female')}" type="radio"
+                                                value="false">
+                                         Female
+                                     </label>
+                                 </div>
+                             </div>
+
+                             <div class="form-group mt-2">
+                                 <label class=" fs-3" for="birthday">Birthday</label>
+                                 <input class="form-control" id="birthday"
+                                        name="birthday" th:value="${user.getStrBirthDay()}" type="date">
+                                 <small class="form-text text-muted fs-1" id="birthdayId"></small>
+                             </div>
+
+                             <div class="form-group">
+                                 <label class="fs-3" for="country">Country</label>
+                                 <input class="form-control" id="country" name="country" placeholder="Enter country"
+                                        th:value="${user.country}" type="text">
+                                 <small class="form-text text-muted fs-1" id="countryId"></small>
+                             </div>
+
+                             <div class="form-group">
+                                 <label class="fs-3" for="phoneNumber">Phone number</label>
+                                 <input class="form-control" id="phoneNumber" name="phoneNumber"
+                                        placeholder="Enter phone number"
+                                        th:value="${user.phoneNumber}" type="text">
+                                 <small class="form-text text-muted fs-1" id="phoneNumberId"></small>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <button class="btn btn-secondary w-100" id="account-btn" onclick="showEditAccount()" type="button">
+                     Update information
+                 </button>
+
+                 <div class="d-none" id="edit-account-btn">
+                     <button class="btn btn-secondary" onclick="cancelEdit()" type="button">Cancel</button>
+                     <button class="btn btn-primary ml-2" onclick="saveEditAccount()" type="button">Post</button>
+                 </div>
+             </div>-->
         </div>
     </div>
 </div>

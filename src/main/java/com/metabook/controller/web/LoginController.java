@@ -3,10 +3,12 @@ package com.metabook.controller.web;
 import com.metabook.dto.EmailDetails;
 import com.metabook.dto.ResponseObject;
 import com.metabook.dto.StatusCode;
+import com.metabook.dto.user.UserDto;
 import com.metabook.entity.User;
 import com.metabook.service.email.EmailService;
 import com.metabook.service.user.CustomUserDetails;
 import com.metabook.service.user.UserService;
+import com.metabook.util.converter.UserConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,15 +36,14 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registration", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<ResponseObject> registration(@RequestBody User user) {
-        if (!userService.existsUserByEmail(user.getNewEmail())) {
-            user.setEmail(user.getNewEmail());
-            user.setPassword(user.getNewPassword());
-            userService.register(user);
+    public ResponseEntity<ResponseObject> registration(@RequestBody UserDto userDto) {
+        if (!userService.existsUserByEmail(userDto.getNewEmail())) {
+            User user = new User();
+            user = UserConvert.userDtoToUser(user, userDto);
+            user = userService.register(user);
             return ResponseEntity.ok(new ResponseObject(user, "Registration is success", StatusCode.SUCCESS));
-        } else {
+        } else
             return ResponseEntity.ok(new ResponseObject(null, "Email is exist", StatusCode.FAILED));
-        }
     }
 
     @GetMapping("/check-email")
@@ -63,7 +64,7 @@ public class LoginController {
             properties.put("name", user.getLastName());
             String password = "123123";
             user.setPassword(password);
-            userService.save(user);
+            userService.changePassword(user);
             properties.put("password", "123123");
             EmailDetails emailDetails = EmailDetails.builder()
                     .to(email)
@@ -89,7 +90,7 @@ public class LoginController {
     @GetMapping("/current-user")
     public ResponseEntity<ResponseObject> getCurrentUser() {
         return ResponseEntity.ok(
-                new ResponseObject(getUser().getEmail(), "Get current user id success", StatusCode.SUCCESS)
+                new ResponseObject(getUser(), "Get current user id success", StatusCode.SUCCESS)
         );
     }
 }

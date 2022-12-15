@@ -13,7 +13,7 @@ $(document).ready(function () {
                           <div class="card-post-image card content mt-3">
                             <div class="card-header bg-white">
                                 <div class="d-flex align-items-center mb-2">
-                                    <img alt="" src="/web/image/avatar_batman.png" width="50">
+                                    <img class="w-50px h-50px img-cover rounded-circle" alt="" src="${item.user.avatarPath}">
                                     <div class="d-flex flex-column ml-2">
                                         <h6 class="m-0">${item.user.fullName}</h6>
                                         <span class="text-muted"><small>${item.postCurrentDate}</small> <b>&#xB7</b> <small><i
@@ -242,12 +242,12 @@ function postContent() {
                 $.toast({
                     text: res.message,
                     heading: "Note",
-                    icon: "success",
-                    showHideTransition: "plain",
+                    icon: res.status,
+                    showHideTransition: "slide",
                     allowToastClose: "true",
                     hideAfter: "2000",
                     position: "top-right",
-                    loaderBg: '#ef3a5d'
+                    loader: false
                 });
                 $('#postCreateModal').modal('toggle')
             }
@@ -317,7 +317,20 @@ function showCommentBox(param) {
     setTimeout(() => {
         $commentPostBox.html('')
     }, 300);
-
+    let user
+    $.get({
+        url: '/api/current-user',
+        async: false,
+        success: function (res) {
+            console.log(res)
+            if (res.status === 'success') {
+                user = res.data
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
     $.get({
         url: `/api/comment/get/${postId}?page=0&size=5`,
         dataType: "json",
@@ -329,7 +342,7 @@ function showCommentBox(param) {
                             <i class="fa-solid fa-caret-down ml-2"></i>
                         </span>
                         <div class="comment-write d-flex align-content-center mt-2 w-100">
-                            <img class="h-40px" src="/web/image/avatar_batman.png">
+                            <img  class="h-40px w-40px img-cover rounded-circle" src="${user.avatarPath}">
                             <div id="box-comment-write-${postId}" class="flex-fill w-25">
                                 <span onkeydown="handleEnter(event, ${postId})" id="comment-write-${postId}"
                                     class="textarea w-100 p-2 pl-3 pr-3 bg-grey btn-focus border-0 ml-2"
@@ -455,7 +468,7 @@ function showCommentMore(id) {
 function getCommentBox(comment) {
     return `<div class="comment-box" id="comment-box-${comment.id}">
                             <div class="comment-read d-flex mt-2">
-                                <img class="w-40px h-40px" src="/web/image/avatar_batman.png">
+                                <img  class="h-40px w-40px img-cover rounded-circle" src="${comment.user.avatarPath}">
                                 <div class=" d-flex flex-column ml-2">
                                     <div class="comment-detail">
                                         <h6 class="comment-name fs-3 m-0">${comment.user.fullName}</h6>
@@ -503,9 +516,8 @@ function likeComment(param) {
     const $likeCommentSpan = $(param + '> span')
     const $commentLikeBtn = $('#commnent-like-' + likeId)
     let numberLike = Number.parseInt($likeCommentSpan.html()) || 0;
-    console.log(numberLike)
     if ($commentLikeBtn.hasClass('text-secondary')) {
-        $likeCommentSpan.html(numberLike + 1)
+        $likeCommentSpan.html(numberLike + 1).addClass('ml-1').addClass('mr-1')
         $commentLikeBtn.removeClass('text-secondary').addClass('text-primary')
         $likeComment.removeClass('d-none')
         $.get({
@@ -555,6 +567,7 @@ function loadLikeCommentByUser() {
         if ($commentLikeBtn != null) $commentLikeBtn.removeClass('text-secondary').addClass('text-primary')
     })
 }
+
 
 setInterval(showRenderCommentLike, 3000)
 

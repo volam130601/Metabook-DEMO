@@ -1,8 +1,8 @@
 package com.metabook.controller.web;
 
-import com.metabook.dto.CommentLikeDto;
 import com.metabook.dto.ResponseObject;
 import com.metabook.dto.StatusCode;
+import com.metabook.dto.comment.CommentLikeDto;
 import com.metabook.entity.comment.Comment;
 import com.metabook.entity.comment.CommentLike;
 import com.metabook.repository.comment.CommentLikeRepository;
@@ -44,14 +44,6 @@ public class CommentController {
                         "Create Comment in post id: " + postId, StatusCode.SUCCESS)
         );
     }
-
-//    @GetMapping("/get/{postId}")
-//    public ResponseEntity<ResponseObject> getByPostId(@PathVariable("postId") long postId) {
-//        return ResponseEntity.ok(
-//                new ResponseObject(commentRepository.findByPostIdOrderByCreateAtDesc(postId),
-//                        "Get By Post id: " + postId, StatusCode.SUCCESS)
-//        );
-//    }
 
     @GetMapping("/get/{postId}")
     public ResponseEntity<ResponseObject> getPageByPostId(@PathVariable("postId") long postId,

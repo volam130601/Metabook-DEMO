@@ -57,7 +57,6 @@ public class Post implements Serializable {
 
         Date dateTemp = new Date();
         long subTime = dateTemp.getTime() - createAt.getTime();
-        long seconds = subTime / 1000;
         long minutes = subTime / (60 * 1000);
         long hours = subTime / (60 * 60 * 1000);
         long days = subTime / (24 * 60 * 60 * 1000);

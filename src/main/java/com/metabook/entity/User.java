@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,16 +31,18 @@ public class User implements Serializable {
     @ToString.Exclude
     @JsonIgnore
     private String password;
-    private Integer phoneNumber;
-    private String firstName;
-    private String lastName;
+    private String phoneNumber;
     @Transient
+    private String firstName;
+    @Transient
+    private String lastName;
     private String fullName;
     private boolean gender = true;
     private Date birthDay;
     private String country;
     private boolean isEnabled = false;
     private String avatar;
+    private String coverImg;
     @CreatedDate
     private Date createAt;
     private Date updateAt;
@@ -77,18 +80,41 @@ public class User implements Serializable {
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<CommentLike> commentLikes;
-    @Transient
-    private String newEmail;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Friend> friendListUsers;
+
+    @OneToMany(mappedBy = "otherUser", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Friend> friendList;
 
     @Transient
-    private String newPassword;
-
-
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
     public String getGender() {
         return (gender) ? "Male" : "Female";
+    }
+
+    @Transient
+    public String getAvatarPath() {
+        if (avatar == null || id == null) return "/web/image/avatar_batman.png";
+
+        return "/image/user/" + id + "/avatar/" + avatar;
+    }
+
+    @Transient
+    public String getCoverImgPath() {
+        if (coverImg == null || id == null) return "/web/image/cover-img-1.jpg";
+
+        return "/image/user/" + id + "/coverImg/" + coverImg;
+    }
+
+    @Transient
+    public String getStrBirthDay() {
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        return f.format(birthDay);
     }
 }

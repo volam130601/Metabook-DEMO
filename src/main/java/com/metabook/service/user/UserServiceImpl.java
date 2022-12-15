@@ -36,6 +36,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        user.setUpdateAt(new Date());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User changePassword(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setUpdateAt(new Date());
         return userRepository.save(user);
@@ -44,11 +50,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsUserByEmail(String email) {
         return userRepository.existsUserByEmail(email);
-    }
-
-    public User update(User user) {
-        user.setUpdateAt(new Date());
-        return userRepository.save(user);
     }
 
     @Override

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static com.metabook.controller.web.LoginController.getUser;
+
 @Controller(value = "WebController")
 public class HomeController {
 
@@ -22,6 +24,7 @@ public class HomeController {
     public String viewHomePage(Model model) {
         model.addAttribute("stories", storyRepository.findAllReverse());
         model.addAttribute("posts", postRepository.findAll());
+        model.addAttribute("user", getUser());
         return "web/index";
     }
 
