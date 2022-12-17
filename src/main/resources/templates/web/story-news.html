@@ -15,7 +15,8 @@
                 <div class="d-flex align-items-center mt-2">
                     <a class="header-close bg-dark  text-white rounded-circle mr-2" th:href="@{/}"><i
                             class="fa-solid fa-xmark"></i></a>
-                    <a th:href="@{/}"> <img alt="" th:src="@{/web/image/metabook.png}" width="42"></a>
+                    <a th:href="@{/}"> <img alt="" class="w-50px h-50px img-cover rounded-circle"
+                                            th:src="@{${user.avatarPath}}"></a>
                 </div>
                 <hr class="story-menu-line">
 
@@ -33,8 +34,8 @@
                     <button class="d-flex align-items-center mt-3 btn-focus bg-transparent border-0"
                             th:onclick="'showArrows('+${stat.index + 1}+')'">
                         <img alt=""
-                             class="story-news-avatar rounded-circle border-primary"
-                             th:src="@{/web/image/avatar_batman.png}" width="50">
+                             class="story-news-avatar rounded-circle border-primary w-50px h-50px img-cover"
+                             th:src="@{${story.user.avatarPath}}">
                         <div class="d-flex flex-column align-items-start ml-2">
                             <div class="fs-4 font-weight-bold" th:utext="${story.getUser().getFullName()}"></div>
                             <div class="fs-2 text-muted" th:utext="${story.getCurrentDate()}"></div>
@@ -54,13 +55,15 @@
                         <div class="bell-report">10+</div>
                     </a>
                     <div class="dropdown">
-                        <img alt="" aria-expanded="false" aria-haspopup="true" class="dropdown-toggle"
-                             data-toggle="dropdown" id="dropdownMenuButton" th:src="@{/web/image/avatar_batman.png}"
-                             width="40">
+                        <img alt="" aria-expanded="false" aria-haspopup="true"
+                             class="dropdown-toggle w-40px h-40px img-cover rounded-circle"
+                             data-toggle="dropdown" id="dropdownMenuButton" th:src="@{${user.avatarPath}}"
+                        >
                         <div aria-labelledby="dropdownMenuButton"
                              class="dropdown-menu dropdown-menu-right mt-2 shadow-sm">
-                            <a class="dropdown-item" href="#">
-                                <i aria-hidden="true" class="fa fa-user mr-1"></i>
+                            <a class="dropdown-item" data-target="#userProfileModal" data-toggle="modal" href="#!"
+                               id="btn-my-account">
+                                <i aria-hidden="true" class="fa fa-user mr-1 bg-grey p-2 rounded-circle"></i>
                                 My account
                             </a>
                             <a class="dropdown-item" href="#">
@@ -83,8 +86,9 @@
                                          class="story-news-content__img"
                                          th:src="@{${story.getImagePath()}}">
                                     <div class="d-flex align-items-center story-news-header p-2">
-                                        <img class="story-news-content_avatar" th:src="@{/web/image/avatar_batman.png}"
-                                             width="40">
+                                        <img class="story-news-content_avatar  w-40px h-40px img-cover rounded-circle"
+                                             th:src="@{${story.user.avatarPath}}"
+                                        >
                                         <div class="fs-3 font-weight-bold text-light ml-2"
                                              th:utext="${story.getUser().getFullName()}"></div>
                                         <div class="fs-1 text-light ml-2" th:utext="${story.getCurrentDate()}"></div>
@@ -105,6 +109,7 @@
 
 
 <!-- Optional JavaScript -->
+<th:block th:replace="fragments/common :: modal-user"></th:block>
 <th:block th:replace="fragments/common :: js-source"></th:block>
 <script src="../../static/web/assets/js/story.js" th:src="@{/web/assets/js/story.js}"></script>
 </body>

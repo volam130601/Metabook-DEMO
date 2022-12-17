@@ -13,14 +13,23 @@
               integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
               referrerpolicy="no-referrer" rel="stylesheet"/>
         <!-- CSS Style -->
-        <link href="../static/web/assets/css/style.css" th:href="@{/web/assets/css/style.css}" rel="stylesheet"/>
-        <link href="../static/web/assets/dist/jquery.toast.min.css" th:href="@{/web/assets/dist/jquery.toast.min.css}"
-              rel="stylesheet"/>
+        <link href="../static/web/assets/css/style.css" rel="stylesheet" th:href="@{/web/assets/css/style.css}"/>
+        <link href="../static/web/assets/dist/jquery.toast.min.css" rel="stylesheet"
+              th:href="@{/web/assets/dist/jquery.toast.min.css}"/>
     </th:block>
 </head>
 <body>
 
-
+<th:block th:fragment="modal-user">
+    <!--  User profile Modal  -->
+    <div aria-hidden="true" aria-labelledby="userProfileModalLabel" class="modal fade" id="userProfileModal"
+         style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
+        <div class="modal-dialog" style="width: 400px; margin-top: 10px; margin-bottom: 10px;">
+            <div class="modal-content" id="modal-account-information">
+            </div>
+        </div>
+    </div>
+</th:block>
 <!-- Optional JavaScript -->
 <th:block th:fragment="js-source">
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

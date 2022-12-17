@@ -1,10 +1,10 @@
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
-$('.story-create-info').click(function (e) {
-    e.preventDefault();
+
+function showStoryCreate() {
     window.location.href = "/story/create"
-});
+}
 
 function showStoryNews(param) {
     window.location.href = `/story/news?id=${param}`
@@ -219,7 +219,7 @@ function validateEmail($email) {
 
 function checkEmailExist(param) {
     return $.get({
-        url: "/api/check-email",
+        url: "/api/v1/check-email",
         data: {email: param},
         dataType: "json",
         contentType: "application/json",
@@ -237,7 +237,7 @@ function checkEmailExist(param) {
 function sendRegistration(data) {
     console.log(data)
     $.post({
-        url: "/api/registration",
+        url: "/api/v1/registration",
         data: data,
         dataType: "json",
         contentType: "application/json",
@@ -282,7 +282,7 @@ $('#formForgotPassword').submit(function (e) {
     })
     if (check_email) {
         $.get({
-            url: "/api/send-email",
+            url: "/api/v1/send-email",
             data: {email: $emailFG.val()},
             dataType: "json",
             contentType: "application/json",
@@ -358,7 +358,7 @@ $('#btn-my-account').click(function (e) {
     e.preventDefault()
     let user
     $.get({
-        url: '/api/current-user',
+        url: '/api/v1/current-user',
         async: false,
         success: function (res) {
             if (res.status === 'success') {
@@ -652,4 +652,71 @@ function saveEditAccount() {
             }
         });
     }
+}
+
+
+//Story view
+showStorySlide()
+
+function showStorySlide() {
+    let user
+    $.get({
+        url: '/api/v1/current-user',
+        async: false,
+        success: function (res) {
+            if (res.status === 'success') {
+                user = res.data
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
+    let str = ``
+    $.get({
+        url: '/api/story/findAll/' + user.id,
+        dataType: 'json',
+        success: function (res) {
+            console.log(res)
+            if (res.status === "success") {
+                const boxSlideStory = $('#box-slide-story')
+                const data = res.data
+                let str = `
+                        <div class="mySlides">
+                            <button onclick="showStoryCreate()" class="story-create-info cursor-pointer border-0 bg-transparent p-0 btn-focus position-relative">
+                                <img alt=""
+                                     class="story-create-info__img img-cover"
+                                     src="${user.avatarPath}">
+                                <span class="story-create-info__icon cursor-pointer"><i
+                                        aria-hidden="true" class="fa fa-plus cursor-pointer"></i></span>
+                                <span class="story-create-info__name cursor-pointer">Create Story</span>
+                            </button>
+                        </div>
+                `
+                data.forEach(function (story, index) {
+                    str += `<button class="mySlides bg-transparent border-0 btn-focus"
+                                    onclick="showStoryNews(${index + 1})">
+                                <div class="story-card">
+                                    <img alt=""
+                                         class="story-card__img img-cover"
+                                         src="${story.imagePath}">
+                                    <img alt=""
+                                         class="story-avatar h-40px w-40px img-cover rounded-circle"
+                                         src="${story.user.avatarPath}">
+                                    <span class="story-name text-white">${story.user.fullName}</span>
+                                </div>
+                            </button>
+                    `
+                })
+                str += `
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                `
+                boxSlideStory.html(str)
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
 }

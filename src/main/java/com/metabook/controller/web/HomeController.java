@@ -1,8 +1,8 @@
 package com.metabook.controller.web;
 
 import com.metabook.entity.User;
-import com.metabook.repository.StoryRepository;
 import com.metabook.repository.post.PostRepository;
+import com.metabook.service.story.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +15,13 @@ import static com.metabook.controller.web.LoginController.getUser;
 public class HomeController {
 
     @Autowired
-    private StoryRepository storyRepository;
+    private StoryService storyService;
 
     @Autowired
     private PostRepository postRepository;
 
     @GetMapping({"/", "/home"})
     public String viewHomePage(Model model) {
-        model.addAttribute("stories", storyRepository.findAllReverse());
         model.addAttribute("posts", postRepository.findAll());
         model.addAttribute("user", getUser());
         return "web/index";
@@ -35,13 +34,15 @@ public class HomeController {
     }
 
     @GetMapping("/story/create")
-    public String viewStoryCreate() {
+    public String viewStoryCreate(Model model) {
+        model.addAttribute("user", getUser());
         return "web/story-create";
     }
 
     @GetMapping("/story/news")
     public String viewStoryNews(@RequestParam(value = "id", required = false) Long storyId, Model model) {
-        model.addAttribute("stories", storyRepository.findAllReverse());
+        model.addAttribute("user", getUser());
+        model.addAttribute("stories", storyService.findAllStoryByUserId(getUser().getId()));
         return "web/story-news";
     }
 }

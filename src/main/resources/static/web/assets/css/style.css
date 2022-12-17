@@ -534,7 +534,10 @@ hr {
 
 .story-create-info__img {
     width: 100%;
+    position: absolute;
     height: 120px;
+    top: 0;
+    left: 0;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }

@@ -15,7 +15,7 @@ function searchUser(param) {
     if (keyword !== "") {
         let currenUser
         $.get({
-            url: '/api/current-user',
+            url: '/api/v1/current-user',
             async: false,
             success: function (res) {
                 if (res.status === 'success') {
@@ -153,7 +153,6 @@ function addFriend(id) {
                 });
                 $('#addFriendModal').modal('toggle')
                 hideBoxSearch()
-                showAllFriend()
             } else {
                 $.toast({
                     text: res.message,
@@ -193,7 +192,6 @@ function unfriend(id) {
                 });
                 $('#addFriendModal').modal('toggle')
                 hideBoxSearch()
-                showAllFriend()
             }
         },
         error: function (e) {
@@ -238,8 +236,54 @@ function bodyAddFriendBox(user) {
     `
 }
 
-//render friend list
-setInterval(showAllFriend, 3000)
+
+showAllFriend()
+showFirstFriendAccept()
+
+setInterval(checkChangeAcceptFriend, 3000)
+setInterval(checkAllFriend, 3000)
+let flag_accept_friend = -1
+
+function checkChangeAcceptFriend() {
+    $.get({
+        url: '/api/friend/find-accept-list',
+        dataType: 'json',
+        success: function (res) {
+            if (res.status === "success") {
+                let length = res.data.length
+                if (flag_accept_friend !== length) {
+                    showFirstFriendAccept()
+                }
+                flag_accept_friend = res.data.length
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
+}
+
+let flag_all_friend = -1
+
+function checkAllFriend() {
+    $.get({
+        url: '/api/friend/findAll',
+        dataType: 'json',
+        success: function (res) {
+            if (res.status === "success") {
+                let length = res.data.length
+                if (flag_all_friend !== length) {
+                    showAllFriend()
+                    showStorySlide()
+                }
+                flag_all_friend = length
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
+}
 
 function showAllFriend() {
     $.get({
@@ -268,8 +312,6 @@ function showAllFriend() {
 
 }
 
-setInterval(showFirstFriendAccept, 3000)
-
 function showFirstFriendAccept() {
     $.get({
         url: '/api/friend/find-first-accept',
@@ -296,51 +338,6 @@ function showFirstFriendAccept() {
                 boxShowAcceptFriend.html(`
                     <div class="text-muted fs-3 ml-2">${res.message}</div> 
                 `)
-            }
-        },
-        error: function (e) {
-            console.log(e)
-        }
-    })
-}
-
-
-function acceptFriend(id) {
-    $.get({
-        url: '/api/friend/accept-friend/' + id,
-        success: function (res) {
-            console.log(res)
-            if (res.status === 'success') {
-                $.toast({
-                    text: res.message,
-                    heading: "Message",
-                    icon: "success",
-                    showHideTransition: "slide",
-                    allowToastClose: "true",
-                    hideAfter: "2000",
-                    loader: false,
-                    position: "top-right",
-                });
-                $('#box-accept-friend').html('')
-                showAllFriend()
-                showAcceptFriendList()
-            }
-        },
-        error: function (e) {
-            console.log(e)
-        }
-    })
-}
-
-function removeFriend(id) {
-    $.get({
-        url: '/api/friend/remove-accept/' + id,
-        success: function (res) {
-            if (res.status === 'success') {
-                $('#box-accept-friend').html('')
-                showFirstFriendAccept()
-                showAllFriend()
-                showAcceptFriendList()
             }
         },
         error: function (e) {
@@ -388,3 +385,44 @@ function showAcceptFriendList() {
         }
     })
 }
+
+function acceptFriend(id) {
+    $.get({
+        url: '/api/friend/accept-friend/' + id,
+        success: function (res) {
+            console.log(res)
+            if (res.status === 'success') {
+                $.toast({
+                    text: res.message,
+                    heading: "Message",
+                    icon: "success",
+                    showHideTransition: "slide",
+                    allowToastClose: "true",
+                    hideAfter: "2000",
+                    loader: false,
+                    position: "top-right",
+                });
+                $('#box-accept-friend').html('')
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
+}
+
+function removeFriend(id) {
+    $.get({
+        url: '/api/friend/remove-accept/' + id,
+        success: function (res) {
+            if (res.status === 'success') {
+                $('#box-accept-friend').html('')
+                showAcceptFriendList()
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    })
+}
+

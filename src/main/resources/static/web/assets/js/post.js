@@ -319,7 +319,7 @@ function showCommentBox(param) {
     }, 300);
     let user
     $.get({
-        url: '/api/current-user',
+        url: '/api/v1/current-user',
         async: false,
         success: function (res) {
             console.log(res)

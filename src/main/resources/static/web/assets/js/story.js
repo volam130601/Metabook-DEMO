@@ -48,6 +48,9 @@ $('#share-story').click(function (e) {
                         position: "top-right",
                         loader: false
                     });
+                    $('.story-footer').addClass('d-none')
+                    $('#view-story').addClass('d-none')
+                    $('.story-box-main').removeClass('d-none')
                 } else {
                     $.toast({
                         text: res.message,
