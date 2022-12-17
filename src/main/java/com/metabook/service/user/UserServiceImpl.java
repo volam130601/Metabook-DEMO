@@ -4,6 +4,8 @@ import com.metabook.entity.User;
 import com.metabook.repository.RoleRepository;
 import com.metabook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,5 +61,21 @@ public class UserServiceImpl implements UserService {
         user.setCreateAt(new Date());
         return userRepository.save(user);
     }
+
+
+    @Override
+    public List<User> searchByFullName(String fullName) {
+        Pageable pageable = PageRequest.of(0, 5);
+        if (fullName != null) {
+            return userRepository.findAllByFullNameContaining(fullName, pageable).getContent();
+        }
+        return null;
+    }
+
+    @Override
+    public User findById(long userId) {
+        return userRepository.findById(userId).get();
+    }
+
 
 }

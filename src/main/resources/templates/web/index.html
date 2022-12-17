@@ -13,7 +13,25 @@
         <img alt="" class="w-40px h-40px img-cover rounded-circle" th:src="@{/web/image/metabook.png}"/></a>
     <div class="navbar-search mr-auto">
         <i aria-hidden="true" class="fa fa-search search-icon"></i>
-        <input class="search-input" placeholder="Search in Metabook" type="text"/>
+        <input class="search-input" onfocus="showBoxSearch()" placeholder="Search in Metabook"
+               type="text"/>
+    </div>
+    <div class="bg-white shadow-around fixed-top pl-3 pr-3 pb-2 pt-2 rounded-bottom d-none" id="box-search"
+         style="width: 350px;">
+        <div class="box-search-header d-flex justify-content-center align-items-center">
+            <button class="search-backhome border-0 btn-focus bg-transparent"
+                    onclick="hideBoxSearch()"><i
+                    class="fa-solid fa-arrow-left"></i></button>
+            <div class="navbar-search flex-fill">
+                <input class="search-input p-2" id="search-user-input" onkeyup="searchUser('#search-user-input')"
+                       placeholder="Search in Metabook"
+                       type="text"/>
+            </div>
+        </div>
+        <span class="fs-4 text-danger d-flex justify-content-center mt-3 mb-3"
+              id="span-search-null">Cannot found user</span>
+        <div id="box-show-user-search"></div>
+
     </div>
     <div class="navbar-list mr-auto text-secondary">
         <a class="navbar-page active m-2" data-placement="bottom" data-toggle="tooltip" title="Home">
@@ -69,22 +87,22 @@
                         <img alt=""
                              class="sidebar-item__img w-40px h-40px img-cover rounded-circle"
                              th:src="@{${user.getAvatarPath()}}">
-                        <a class="sidebar-item__link" href="" th:utext="${user.fullName}"></a>
+                        <a class="sidebar-item__link ml-2" href="" th:utext="${user.fullName}"></a>
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
                              class="sidebar-item__img" th:src="@{/web/image/friends.png}">
-                        <a class="sidebar-item__link" href="">Friends</a>
+                        <a class="sidebar-item__link ml-2" href="">Friends</a>
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
                              class="sidebar-item__img" th:src="@{/web/image/group.png}">
-                        <a class="sidebar-item__link" href="">Group</a>
+                        <a class="sidebar-item__link ml-2" href="">Group</a>
                     </div>
                     <div class="sidebar-item">
                         <img alt=""
                              class="sidebar-item__img" th:src="@{/web/image/watch.png}">
-                        <a class="sidebar-item__link" href="">Watch</a>
+                        <a class="sidebar-item__link ml-2" href="">Watch</a>
                     </div>
                 </div>
             </div>
@@ -176,43 +194,25 @@
             <div class="fixed-right">
                 <div class="sidebar sidebar-right mt-3 sidebar-scrollbar">
                     <div class="d-flex ml-2">
-                        <h6 class="mr-auto text-muted">Lời mời kết bạn</h6>
-                        <a class="text-meta">Xem tất cả</a>
+                        <h6 class="mr-auto text-muted">Friend Request</h6>
+                        <button class="fs-3 font-weight-bold btn-focus bg-transparent border-0 text-underline text-meta"
+                                data-target="#requestFriendModal" data-toggle="modal"
+                                onclick="showAcceptFriendList()">Show all
+                        </button>
                     </div>
-                    <div class="sidebar-invitation">
-                        <img alt=""
-                             class="sidebar-invitation__img" th:src="@{/web/image/avatar_batman.png}">
-                        <div class="d-flex flex-column" style="width: 100%;">
-                            <div class="d-flex justify-content-around">
-                                <h6 class="mr-auto ml-3">Võ Lâm</h6>
-                                <em class="text-muted fs-2">19 hours</em>
-                            </div>
-                            <div class="d-flex">
-                                <button class="btn btn-meta ml-3 pl-4 pr-4 font-weight-bold">Accept</button>
-                                <button class="btn btn-secondary ml-3 pl-4 pr-4 font-weight-bold">Remove</button>
-                            </div>
-                        </div>
+                    <div class="sidebar-invitation" id="box-accept-friend">
+
                     </div>
                     <hr>
                     <div class="d-flex ml-2">
-                        <h6 class="mr-auto text-muted">Người liên hệ</h6>
+                        <h6 class="mr-auto text-muted">Contact person</h6>
                         <div class="d-flex justify-content-around">
                             <a class="pr-3 text-muted" href=""><i class="fa-solid fa-video"></i></a>
                             <a class="pr-3 text-muted" href=""><i class="fa-solid fa-magnifying-glass"></i></a>
                             <a class="pr-3 text-muted" href=""> <i class="fa-solid fa-ellipsis"></i></a>
                         </div>
                     </div>
-                    <div class="sidebar-item">
-                        <img alt=""
-                             class="sidebar-item__img" th:src="@{/web/image/avatar_batman.png}">
-                        <a class="sidebar-item__link" href="">Võ Lâm</a>
-                    </div>
-                    <div class="sidebar-item">
-                        <img alt=""
-                             class="sidebar-item__img"
-                             th:src="@{/web/image/avatar/avatar1.png}">
-                        <a class="sidebar-item__link" href="">Võ Kim Trí</a>
-                    </div>
+                    <div id="box-show-friend"></div>
                 </div>
             </div>
         </div>
@@ -290,146 +290,35 @@
      style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
     <div class="modal-dialog" style="width: 400px; margin-top: 10px; margin-bottom: 10px;">
         <div class="modal-content" id="modal-account-information">
-            <!-- <div class="modal-header">
-                 <h5 class="font-weight-bold" id="userProfileModalLabel">My account</h5>
-                 <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-             </div>
-             <div class="modal-body  p-0">
-                 <div class="account-body">
-                     <div class="account-image">
-                         <div class="w-100">
-                             <img alt="" class="account-cover-img w-100" th:src="${user.coverImgPath}">
-                         </div>
-                         <div class="account-avatar">
-                             <img alt="" class="account-avatar-img" th:src="${user.avatarPath}">
-                         </div>
-                     </div>
-                     <p class="text-center mt-5 fs-5 font-weight-bold" th:utext="${user.fullName}"></p>
-                     <div class="p-3">
+        </div>
+    </div>
+</div>
 
-                         <label class="fs-4 font-weight-bold">Personal information</label>
 
-                         <div class="d-flex align-content-center fs-3">
-                             <label class=" text-muted" style="width: 100px;">Email</label>
-                             <span th:utext="${user.email}"></span>
-                         </div>
+<!--  Add friend Modal  -->
+<div aria-hidden="true" aria-labelledby="addFriendModalLabel" class="modal fade" id="addFriendModal"
+     style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
+    <div class="modal-dialog" style="width: 400px; margin-top: 10px; margin-bottom: 10px;">
+        <div class="modal-content" id="box-friend"></div>
+    </div>
+</div>
 
-                         <div class="d-flex align-content-center fs-3">
-                             <label class=" text-muted" style="width: 100px;">Gender</label>
-                             <span th:utext="${user.getGender()}"></span>
-                         </div>
 
-                         <div class="d-flex align-content-center fs-3">
-                             <label class=" text-muted" style="width: 100px;">Birthday</label>
-                             <span th:utext="${user.getStrBirthDay()}"></span>
-                         </div>
-
-                         <div class="d-flex align-content-center fs-3">
-                             <label class=" text-muted" style="width: 100px;">Phone number</label>
-                             <span th:utext="${user.phoneNumber}"></span>
-                         </div>
-
-                         <div class="d-flex align-content-center fs-3">
-                             <label class=" text-muted" style="width: 100px;">Country</label>
-                             <span th:utext="${user.country}"></span>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="d-none" id="edit-account-body" style="height: 450px;">
-                     <form id="formEditAccount">
-                         <div class="account-image">
-                             <div class="w-100">
-                                 <img alt="" class="account-cover-img w-100" th:src="${user.coverImgPath}">
-                                 <label class="position-absolute top-0 left-0 bg-transparent h-100 w-100 cursor-pointer"
-                                        for="upload-cover-img"></label>
-                                 <input hidden id="upload-cover-img" type="file">
-                             </div>
-                             <div class="account-avatar">
-                                 <img alt="" class="account-avatar-img" th:src="${user.avatarPath}">
-                                 <i class="fa-solid fa-camera"></i>
-                                 <label class="bg-transparent h-100 w-100 cursor-pointer"
-                                        for="upload-avatar-user"></label>
-                                 <input hidden id="upload-avatar-user" type="file">
-                             </div>
-                         </div>
-                         <div class="pl-3 pr-3">
-                             <div class="form-group mt-5">
-                                 <label class="fs-3 font-weight-bold" for="fullName">Display name</label>
-                                 <input aria-describedby="fullNameId" class="form-control" id="fullName" name="fullName"
-                                        placeholder="Enter display name" th:value="${user.fullName}" type="text">
-                                 <small class="form-text text-muted fs-1" id="fullNameId">Use your real name to make it
-                                     easier
-                                     for friends to identify.</small>
-                             </div>
-                             <div class="bg-grey-1 w-100" style="height: 10px;"></div>
-                             <div class="fs-3 font-weight-bold mt-2">Personal information</div>
-
-                             <label class="form-check-label mt-2 fs-3">Gender</label>
-                             <div class="row ml-2">
-                                 <th:block></th:block>
-                                 <div class="form-check">
-                                     <label class="form-check-label">
-                                         <input checked class="form-check-input"
-                                                name="gender" th:if="${user.getGender().equals('Male')}"
-                                                type="radio"
-                                                value="true">
-                                         <input class="form-check-input" name="gender"
-                                                th:unless="${user.getGender().equals('Male')}"
-                                                type="radio"
-                                                value="true">
-                                         Male
-                                     </label>
-                                 </div>
-                                 <div class="form-check ml-3">
-                                     <label class="form-check-label">
-                                         <input checked class="form-check-input"
-                                                name="gender" th:if="${user.getGender().equals('Female')}" type="radio"
-                                                value="false">
-                                         <input class="form-check-input" name="gender"
-                                                th:unless="${user.getGender().equals('Female')}" type="radio"
-                                                value="false">
-                                         Female
-                                     </label>
-                                 </div>
-                             </div>
-
-                             <div class="form-group mt-2">
-                                 <label class=" fs-3" for="birthday">Birthday</label>
-                                 <input class="form-control" id="birthday"
-                                        name="birthday" th:value="${user.getStrBirthDay()}" type="date">
-                                 <small class="form-text text-muted fs-1" id="birthdayId"></small>
-                             </div>
-
-                             <div class="form-group">
-                                 <label class="fs-3" for="country">Country</label>
-                                 <input class="form-control" id="country" name="country" placeholder="Enter country"
-                                        th:value="${user.country}" type="text">
-                                 <small class="form-text text-muted fs-1" id="countryId"></small>
-                             </div>
-
-                             <div class="form-group">
-                                 <label class="fs-3" for="phoneNumber">Phone number</label>
-                                 <input class="form-control" id="phoneNumber" name="phoneNumber"
-                                        placeholder="Enter phone number"
-                                        th:value="${user.phoneNumber}" type="text">
-                                 <small class="form-text text-muted fs-1" id="phoneNumberId"></small>
-                             </div>
-                         </div>
-                     </form>
-                 </div>
-             </div>
-             <div class="modal-footer">
-                 <button class="btn btn-secondary w-100" id="account-btn" onclick="showEditAccount()" type="button">
-                     Update information
-                 </button>
-
-                 <div class="d-none" id="edit-account-btn">
-                     <button class="btn btn-secondary" onclick="cancelEdit()" type="button">Cancel</button>
-                     <button class="btn btn-primary ml-2" onclick="saveEditAccount()" type="button">Post</button>
-                 </div>
-             </div>-->
+<!--  List Request friend Modal  -->
+<div aria-hidden="true" aria-labelledby="requestFriendModalLabel" class="modal fade" id="requestFriendModal"
+     style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
+    <div class="modal-dialog" style="width: 400px; margin-top: 10px; margin-bottom: 10px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="font-weight-bold">Request Friend List</h5>
+                <button aria-label="Close" class="close btn-focus" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <div id="request-list">
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -438,6 +327,7 @@
 <!--JS Custom-->
 <script src="../../static/web/assets/js/slider.js" th:src="@{/web/assets/js/slider.js}"></script>
 <script src="../../static/web/assets/js/post.js" th:src="@{/web/assets/js/post.js}"></script>
+<script src="../../static/web/assets/js/friend.js" th:src="@{/web/assets/js/friend.js}"></script>
 </body>
 
 </html>

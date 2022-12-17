@@ -538,31 +538,6 @@ function uploadCoverImg(event) {
     }
 }
 
-// $('#upload-avatar-user').change(function (e) {
-//     const file = this.files[0];
-//     if (file) {
-//         formDataEditAccount.append('avatar-img', file)
-//         let reader = new FileReader();
-//         reader.onload = function (event) {
-//             console.log(event.target.result)
-//             $('.account-avatar-img').attr("src", event.target.result)
-//         }
-//         reader.readAsDataURL(file);
-//     }
-// })
-// $('#upload-cover-img').change(function (e) {
-//     const file = this.files[0];
-//     if (file) {
-//         formDataEditAccount.append('cover-img', file)
-//         let reader = new FileReader();
-//         reader.onload = function (event) {
-//             console.log(event.target.result)
-//             $('.account-cover-img').attr("src", event.target.result)
-//         }
-//         reader.readAsDataURL(file);
-//     }
-// })
-
 const $smallFullName = $('#fullNameId')
 const $inputFullName = $('#fullName')
 const $smallBirthDay = $('#birthdayId')

@@ -22,6 +22,8 @@ import java.util.List;
 @Table(name = "users",
         uniqueConstraints = {@UniqueConstraint(name = "UN_Email", columnNames = "email")})
 public class User implements Serializable {
+    @Transient
+    public boolean friendOfCurrentUser = false;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,48 +52,43 @@ public class User implements Serializable {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Role role;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Story> storyList;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Post> postList;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<PostLike> postLikeList;
-
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Comment> commentList;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<CommentLike> commentLikes;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Friend> friendListUsers;
-
     @OneToMany(mappedBy = "otherUser", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<Friend> friendList;
+    @Transient
+    private String acceptFriendDate;
 
     @Transient
     public String getGender() {

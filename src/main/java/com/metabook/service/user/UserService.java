@@ -19,4 +19,7 @@ public interface UserService {
 
     boolean existsUserByEmail(String email);
 
+    List<User> searchByFullName(String fullName);
+
+    User findById(long userId);
 }

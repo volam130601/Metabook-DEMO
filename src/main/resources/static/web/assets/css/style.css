@@ -355,12 +355,9 @@ hr {
 }
 
 .sidebar-item__link {
-    margin-left: 10px;
     text-decoration: none;
     color: black;
     font-weight: 600;
-    width: 100%;
-    height: 100%;
 }
 
 .sidebar-item__link:hover {
@@ -385,12 +382,19 @@ hr {
     height: 50px;
 }
 
+#request-list {
+    height: 450px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 /* Scrollbar Sidebar */
 .sidebar-scrollbar::-webkit-scrollbar-track,
 #story-paint::-webkit-scrollbar-track,
 #post-create__input::-webkit-scrollbar-track,
 #post-create-body::-webkit-scrollbar-track,
-#edit-account-body::-webkit-scrollbar-track {
+#edit-account-body::-webkit-scrollbar-track,
+#request-list::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #f8f9fa;
     margin-top: -20px;
@@ -401,7 +405,8 @@ hr {
 #story-paint::-webkit-scrollbar,
 #post-create__input::-webkit-scrollbar,
 #post-create-body::-webkit-scrollbar,
-#edit-account-body::-webkit-scrollbar {
+#edit-account-body::-webkit-scrollbar,
+#request-list::-webkit-scrollbar {
     width: 10px;
     background-color: #f8f9fa;
 }
@@ -410,7 +415,8 @@ hr {
 #story-paint::-webkit-scrollbar-thumb,
 #post-create__input::-webkit-scrollbar-thumb,
 #post-create-body::-webkit-scrollbar-thumb,
-#edit-account-body::-webkit-scrollbar-thumb {
+#edit-account-body::-webkit-scrollbar-thumb,
+#request-list::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #9c9797;
 }
@@ -1119,4 +1125,20 @@ hr {
 #edit-account-body {
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+
+/*Box search*/
+.search-backhome {
+    width: 50px;
+}
+
+.search-backhome i {
+    padding: 10px 11px;
+    border-radius: 30px;
+}
+
+.search-backhome i:hover {
+    background: rgba(211, 209, 209, 0.671);
+    cursor: pointer;
 }
