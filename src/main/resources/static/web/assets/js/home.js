@@ -358,7 +358,7 @@ $('#btn-my-account').click(function (e) {
     e.preventDefault()
     let user
     $.get({
-        url: '/api/v1/current-user',
+        url: '/api/user/current-user',
         async: false,
         success: function (res) {
             if (res.status === 'success') {
@@ -655,13 +655,12 @@ function saveEditAccount() {
 }
 
 
-//Story view
 showStorySlide()
 
 function showStorySlide() {
     let user
     $.get({
-        url: '/api/v1/current-user',
+        url: '/api/user/current-user',
         async: false,
         success: function (res) {
             if (res.status === 'success') {
@@ -672,12 +671,11 @@ function showStorySlide() {
             console.log(e)
         }
     })
-    let str = ``
     $.get({
         url: '/api/story/findAll/' + user.id,
         dataType: 'json',
+        async: false,
         success: function (res) {
-            console.log(res)
             if (res.status === "success") {
                 const boxSlideStory = $('#box-slide-story')
                 const data = res.data

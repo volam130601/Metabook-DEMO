@@ -24,7 +24,7 @@ class StoryServiceImplTest {
     StoryRepository storyRepository;
 
     @Test
-    void findAllStoryWithFriendId() {
+    void findAllPostWithFriendId() {
         List<Story> stories = storyRepository.findByUserId(1);
         friendService.findByUserId(1)
                 .stream().filter(Friend::isAccept)

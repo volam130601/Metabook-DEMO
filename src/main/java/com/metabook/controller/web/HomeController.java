@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import static com.metabook.controller.web.LoginController.getUser;
+import static com.metabook.controller.web.UserController.getUser;
 
 @Controller(value = "WebController")
 public class HomeController {

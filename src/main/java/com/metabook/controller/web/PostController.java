@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.metabook.controller.web.LoginController.getUser;
+import static com.metabook.controller.web.UserController.getUser;
 
 @RestController
 @RequestMapping("/api/post")
@@ -49,30 +49,33 @@ public class PostController {
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         }
         post.setPostImages(postImages);
-        postService.save(post);
         return ResponseEntity.ok(
-                new ResponseObject(null, "Post create is success", StatusCode.SUCCESS)
+                new ResponseObject(postService.save(post), "Post create is success", StatusCode.SUCCESS)
         );
     }
 
-    //Haven't done
-    @GetMapping("/getTop2")
-    public ResponseEntity<ResponseObject> getPostTop2() {
-        return ResponseEntity.ok(
-                new ResponseObject(postService.findAll(), "GET Post News is success", StatusCode.SUCCESS)
-        );
-    }
-
-    //Haven't done
-    @GetMapping("/getAll")
-    public ResponseEntity<ResponseObject> getPostAll() {
-        List<Post> postList = postService.findAll();
-        for (Post post : postList) {
-            post.setCountLikes(postLikeService.countPostLikeByPostId(post.getId()));
-            post.setCountComments(commentRepository.countByPostId(post.getId()));
+    @GetMapping("/view")
+    public ResponseEntity<ResponseObject> findPagePostByUserId(@RequestParam("page") int page,
+                                                               @RequestParam("size") int size) {
+        List<Post> posts = postService.findPagePostByUserId(getUser().getId(), page, size);
+        if (posts != null) {
+            posts.forEach(post -> {
+                post.setCountLikes(postLikeService.countPostLikeByPostId(post.getId()));
+                post.setCountComments(commentRepository.countByPostId(post.getId()));
+            });
+            return ResponseEntity.ok(
+                    new ResponseObject(posts, "GET Post News have page: " + page + ", size :" + size, StatusCode.SUCCESS)
+            );
         }
         return ResponseEntity.ok(
-                new ResponseObject(postList, "GET Post News is success", StatusCode.SUCCESS)
+                new ResponseObject(null, "GET Post News failed", StatusCode.ERROR)
+        );
+    }
+
+    @GetMapping("/count-post")
+    public ResponseEntity<ResponseObject> countPost() {
+        return ResponseEntity.ok(
+                new ResponseObject(postService.countTotalPost(getUser().getId()), "Count Post", StatusCode.SUCCESS)
         );
     }
 

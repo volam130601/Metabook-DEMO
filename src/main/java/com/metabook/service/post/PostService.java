@@ -12,4 +12,7 @@ public interface PostService {
     Post findById(Long postId);
 
 
+    List<Post> findPagePostByUserId(long userId, int page, int size);
+
+    long countTotalPost(long userId);
 }

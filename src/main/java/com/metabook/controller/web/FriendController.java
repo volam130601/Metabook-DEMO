@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.metabook.controller.web.LoginController.getUser;
+import static com.metabook.controller.web.UserController.getUser;
 
 @RestController
 @RequestMapping("/api/friend")

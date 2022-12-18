@@ -15,7 +15,7 @@ function searchUser(param) {
     if (keyword !== "") {
         let currenUser
         $.get({
-            url: '/api/v1/current-user',
+            url: '/api/user/current-user',
             async: false,
             success: function (res) {
                 if (res.status === 'success') {

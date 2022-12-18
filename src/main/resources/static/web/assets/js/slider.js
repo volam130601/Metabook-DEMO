@@ -11,7 +11,7 @@ function plusSlides(n) {
     showArrows((slideIndex += n));
     number = margin_left;
     // margin_left += n * 115;
-    margin_left += n * 145;
+    margin_left += n * 135;
     if (number !== margin_left) intervalSlide = loopSlide();
     else clearInterval(intervalSlide);
 }

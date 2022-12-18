@@ -1,75 +1,124 @@
-// Post get data
-$(document).ready(function () {
+let x = 0, i = 0, size = 2;
+const postImageBody = $('#post-image-body')
+
+showPostView(i, size)
+$(window).scroll(function () {
+    x = window.scrollY + $(window).height()
+    if (x >= $(document).height()) {
+        if (i <= getCountPost()) {
+            postImageBody.append(loadingSpanner())
+            setTimeout(() => {
+                $('.comment-spinner').remove()
+                showPostView(++i, size)
+            }, 300)
+        }
+    }
+})
+
+function getCountPost() {
+    let count = 0
     $.get({
-        url: "/api/post/getAll",
+        url: "/api/post/count-post",
         dataType: "json",
         async: false,
         success: function (res) {
-            const $data = res.data
-            $data.forEach(function (item) {
-                let image = getImagePost(item)
-
-                $('#post-image-body').append(`
-                          <div class="card-post-image card content mt-3">
-                            <div class="card-header bg-white">
-                                <div class="d-flex align-items-center mb-2">
-                                    <img class="w-50px h-50px img-cover rounded-circle" alt="" src="${item.user.avatarPath}">
-                                    <div class="d-flex flex-column ml-2">
-                                        <h6 class="m-0">${item.user.fullName}</h6>
-                                        <span class="text-muted"><small>${item.postCurrentDate}</small> <b>&#xB7</b> <small><i
-                                                    class="fa-solid fa-earth-americas"></i></small></span>
-                                    </div>
-                                    <i class="fa-solid fa-ellipsis ml-auto fs-6"></i>
-                                </div>
-                                <div class="post-content">${item.content}</div>
-                            </div>
-                            <div class="post-image">
-                                ${image}
-                            </div>
-                            <div class="card-footer bg-white">
-                                <div class="d-flex align-items-center">
-                                    <div class="post-like-icon">
-                                        <img width="20" alt="" src="/web/image/like/like_thumb_social_vote_favorite_icon.png">
-                                    </div>
-                                    <span id="count-like-post-${item.id}" class="text-muted ml-3">${item.countLikes}</span>
-                                    <button onclick="showCommentBox('#comment-post-'+${item.id})" class="comment-post text-muted ml-auto border-0 btn-focus text-underline bg-transparent">
-                                        <span class="count-comment-post-${item.id}" >${item.countComments}</span> comments
-                                    </button>
-                                    <span id="count-share-post-${item.id}" class="text-muted ml-2">274 shares</span>
-                                </div>
-                                <hr>
-                                <div class="d-flex justify-content-around align-items-center">
-                                    <button class="btn-post fs-4 font-weight-bold text-muted like-post" id="like-post-${item.id}" onclick="likePost('#like-post-'+${item.id})">
-                                        <i class="fa-regular fa-thumbs-up "></i>
-                                        <i class="fa-solid fa-thumbs-up d-none"></i>
-                                        <span>Like</span>
-                                    </button>
-                                    <button class="btn-post fs-4 font-weight-bold text-muted"
-                                        onclick="showCommentBox('#comment-post-'+${item.id})">
-                                        <i class="fa-regular fa-comment"></i>
-                                        <span>Comment</span>
-                                    </button>
-                                    <button class="btn-post fs-4 font-weight-bold text-muted">
-                                        <i class="fa-solid fa-share"></i>
-                                        <span>Share</span>
-                                    </button>
-                                </div>
-                                <div id="comment-post-${item.id}">
-                                    <!-- Comment Body -->
-                                </div>
-                            </div>
-                        </div>
-                 `)
-            });
+            if (res.status === "success") {
+                count = res.data
+            }
         },
         error: function (e) {
             console.log(e)
         }
     });
+    return count
+}
 
-    //Load Like
-    loadLikeByUser()
-});
+function showPostView(page, size) {
+    $.get({
+        url: "/api/post/view",
+        data: {
+            page: page,
+            size: size
+        },
+        dataType: "json",
+        contentType: "application/json",
+        async: false,
+        success: function (res) {
+            if (res.status === "success") {
+                const $data = res.data
+                $data.forEach(function (post) {
+                    postImageBody.append(bodyPost(post))
+                });
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    });
+}
+
+
+function bodyPost(item) {
+    let image = getImagePost(item)
+    return `<div class="card-post-image card content mt-3">
+                                <div class="card-header bg-white">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <img class="w-50px h-50px img-cover rounded-circle" alt="" src="${item.user.avatarPath}">
+                                        <div class="d-flex flex-column ml-2">
+                                            <h6 class="m-0">${item.user.fullName}</h6>
+                                            <span class="text-muted"><small>${item.postCurrentDate}</small> <b>&#xB7</b> <small><i
+                                                        class="fa-solid fa-earth-americas"></i></small></span>
+                                        </div>
+                                        <i class="fa-solid fa-ellipsis ml-auto fs-6"></i>
+                                    </div>
+                                    <div class="post-content">${item.content}</div>
+                                </div>
+                                <div class="post-image">
+                                    ${image}
+                                </div>
+                                <div class="card-footer bg-white">
+                                    <div class="d-flex align-items-center">
+                                        <div class="post-like-icon">
+                                            <img width="20" alt="" src="/web/image/like/like_thumb_social_vote_favorite_icon.png">
+                                        </div>
+                                        <span id="count-like-post-${item.id}" class="text-muted ml-3">${item.countLikes}</span>
+                                        <button onclick="showCommentBox('#comment-post-'+${item.id})" class="comment-post text-muted ml-auto border-0 btn-focus text-underline bg-transparent">
+                                            <span class="count-comment-post-${item.id}" >${item.countComments}</span> comments
+                                        </button>
+                                        <span id="count-share-post-${item.id}" class="text-muted ml-2">274 shares</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-around align-items-center">
+                                        <button class="btn-post fs-4 font-weight-bold text-muted like-post" id="like-post-${item.id}" onclick="likePost('#like-post-'+${item.id})">
+                                            <i class="fa-regular fa-thumbs-up "></i>
+                                            <i class="fa-solid fa-thumbs-up d-none"></i>
+                                            <span>Like</span>
+                                        </button>
+                                        <button class="btn-post fs-4 font-weight-bold text-muted"
+                                            onclick="showCommentBox('#comment-post-'+${item.id})">
+                                            <i class="fa-regular fa-comment"></i>
+                                            <span>Comment</span>
+                                        </button>
+                                        <button class="btn-post fs-4 font-weight-bold text-muted">
+                                            <i class="fa-solid fa-share"></i>
+                                            <span>Share</span>
+                                        </button>
+                                    </div>
+                                    <div id="comment-post-${item.id}">
+                                        <!-- Comment Body -->
+                                    </div>
+                                </div>
+                            </div>`
+}
+
+function loadingSpanner() {
+    return `<div class="text-center comment-spinner" style="height: 500px;">
+                <hr>
+                <div class="spinner-grow mt-2" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>`
+}
 
 function getImagePost(item) {
     let image
@@ -120,6 +169,8 @@ function getImagePost(item) {
     }
     return image
 }
+
+loadLikeByUser()
 
 function loadLikeByUser() {
     let $data = []
@@ -231,6 +282,9 @@ function postContent() {
     $data.forEach((item, index) => {
         formData.append('file', item)
     });
+    $data = []
+    $postText.val("")
+    clearImage()
     $.post({
         url: "/api/post/create",
         data: formData,
@@ -249,6 +303,7 @@ function postContent() {
                     position: "top-right",
                     loader: false
                 });
+                postImageBody.prepend(bodyPost(res.data))
                 $('#postCreateModal').modal('toggle')
             }
         },
@@ -302,7 +357,6 @@ function likePost(param) {
     }
 }
 
-//Handle Comment
 function showCommentBox(param) {
     let postId = Number.parseInt(param.substring(param.lastIndexOf('-') + 1))
     const $commentPostBox = $(param)
@@ -319,10 +373,9 @@ function showCommentBox(param) {
     }, 300);
     let user
     $.get({
-        url: '/api/v1/current-user',
+        url: '/api/user/current-user',
         async: false,
         success: function (res) {
-            console.log(res)
             if (res.status === 'success') {
                 user = res.data
             }
@@ -408,7 +461,6 @@ function handleEnter(e, id) {
             contentType: "application/json",
             async: false,
             success: function (res) {
-                console.log(res)
                 const comment = res.data
                 if (res.status === 'success') {
                     $commentBox.prepend(getCommentBox(comment))
@@ -508,7 +560,6 @@ function getLikeCommentSpan(comment) {
     return $likeCommentSpan
 }
 
-//Like comment
 function likeComment(param) {
     let likeId = Number.parseInt(param.substring(param.lastIndexOf('-') + 1))
     const $likeComment = $(param)

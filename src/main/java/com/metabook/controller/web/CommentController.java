@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.metabook.controller.web.LoginController.getUser;
+import static com.metabook.controller.web.UserController.getUser;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -37,7 +37,7 @@ public class CommentController {
         return ResponseEntity.ok(
                 new ResponseObject(commentRepository.save(Comment.builder()
                         .content(content)
-                        .user(LoginController.getUser())
+                        .user(getUser())
                         .post(postRepository.findById(postId).get())
                         .createAt(new Date())
                         .build()),
