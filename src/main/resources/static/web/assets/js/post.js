@@ -10,7 +10,7 @@ $(window).scroll(function () {
             setTimeout(() => {
                 $('.comment-spinner').remove()
                 showPostView(++i, size)
-            }, 300)
+            }, 100)
         }
     }
 })

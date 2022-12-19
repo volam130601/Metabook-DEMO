@@ -718,3 +718,157 @@ function showStorySlide() {
         }
     })
 }
+
+
+// Change password
+let checkChangePass = true
+
+
+const oldPasswordInput = $('#oldPassword')
+const newPasswordInput = $('#newPassword')
+const reNewPasswordInput = $('#reNewPassword')
+
+function saveChangePassword() {
+    if (checkChangePass) {
+        const password = newPasswordInput.val()
+        $.post({
+            url: "/api/user/change-password",
+            data: {newPassword: password},
+            dataType: "json",
+            contentType: "application/json",
+            success: function (res) {
+                if (res.status === "success") {
+                    $('#changePasswordModal').modal('toggle')
+                    $.toast({
+                        text: res.message,
+                        heading: "Message",
+                        icon: "success",
+                        showHideTransition: "slide",
+                        allowToastClose: "true",
+                        hideAfter: "2000",
+                        loader: false,
+                        position: "top-right",
+                        loaderBg: '#ef3a5d'
+                    });
+                }
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        });
+    }
+}
+
+oldPasswordInput.click(function (e) {
+    const smallId = $('#oldPasswordId')
+    const inputId = $('#oldPassword')
+    smallId.html('')
+    inputId.removeClass('border-danger')
+})
+
+oldPasswordInput.focusout(function (e) {
+    e.preventDefault();
+    const value = oldPasswordInput.val()
+    const smallId = $('#oldPasswordId')
+    const inputId = $('#oldPassword')
+    $.get({
+        url: "/api/user/check-password",
+        data: {password: value},
+        dataType: "json",
+        contentType: "application/json",
+        async: false,
+        success: function (res) {
+            if (res.status === 'success') {
+                console.log('check old password success')
+            } else {
+                smallId.html('Old Password does not exist')
+                inputId.addClass('border-danger')
+                checkChangePass = false
+            }
+        },
+        error: function (e) {
+            console.log(e)
+        }
+    });
+    if (value === "" || value === null) {
+        smallId.html('Old password is empty')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else if (value.length < 6 || value.length > 30) {
+        smallId.html('Old password is longer than 6 and shorter than 30')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else {
+        checkChangePass = true
+    }
+});
+
+newPasswordInput.click(function (e) {
+    const smallId = $('#newPasswordId')
+    const inputId = $('#newPassword')
+    smallId.html('')
+    smallId.addClass('text-danger').removeClass('text-warning')
+    inputId.removeClass('border-danger')
+})
+
+let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
+
+newPasswordInput.focusout(function (e) {
+    e.preventDefault();
+    const value = newPasswordInput.val()
+    const inputId = $('#newPassword')
+    const smallId = $('#newPasswordId')
+    if (value === "" || value === null) {
+        smallId.html('New password is empty')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else if (value.length < 6 || value.length > 30) {
+        smallId.html('New password is longer than 6 and shorter than 30')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else if (strongPassword.test(value)) {
+        smallId.addClass('text-warning').removeClass('text-danger')
+        smallId.html('New password is strong password')
+        checkChangePass = true
+    } else if (mediumPassword.test(value)) {
+        smallId.addClass('text-warning').removeClass('text-danger')
+        smallId.html('New password is medium password')
+        checkChangePass = true
+    } else {
+        smallId.addClass('text-warning').removeClass('text-danger')
+        smallId.html('New password is weak password')
+        checkChangePass = true
+    }
+});
+
+reNewPasswordInput.click(function (e) {
+    const smallId = $('#reNewPasswordId')
+    const inputId = $('#reNewPassword')
+    smallId.html('')
+    inputId.removeClass('border-danger')
+})
+
+reNewPasswordInput.focusout(function (e) {
+    e.preventDefault();
+    const value = reNewPasswordInput.val()
+    const newPassword = newPasswordInput.val()
+    const inputId = $('#reNewPassword')
+    const smallId = $('#reNewPasswordId')
+    if (value === "" || value === null) {
+        smallId.html('Re-New password is empty')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else if (value.length < 6 || value.length > 30) {
+        smallId.html('Re-New password is longer than 6 and shorter than 30')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else if (value != newPassword) {
+        smallId.html('Re-enter incorrect password')
+        inputId.addClass('border-danger')
+        checkChangePass = false
+    } else {
+        checkChangePass = true
+    }
+});
+

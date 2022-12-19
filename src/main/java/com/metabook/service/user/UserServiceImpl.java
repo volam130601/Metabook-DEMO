@@ -77,5 +77,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId).get();
     }
 
+    @Override
+    public boolean existsByPassword(User user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
 
 }

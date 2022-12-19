@@ -299,6 +299,7 @@ function showAllFriend() {
                             <img alt="" class="w-40px h-40px img-cover rounded-circle"
                                  class="sidebar-item__img" src="${user.avatarPath}">
                             <a class="sidebar-item__link ml-2" href="#!">${user.fullName}</a>
+                            <button onclick="modalUnfriend(${user.id})" class="btn btn-success ml-auto p-1 fs-2 font-weight-bold" data-toggle="modal" data-target="#addFriendModal">Friend</button>
                         </div>
                     `
                 })
