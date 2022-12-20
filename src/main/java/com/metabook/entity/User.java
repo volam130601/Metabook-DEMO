@@ -33,6 +33,7 @@ public class User implements Serializable {
     @ToString.Exclude
     @JsonIgnore
     private String password;
+    @Column(length = 10)
     private String phoneNumber;
     @Transient
     private String firstName;
