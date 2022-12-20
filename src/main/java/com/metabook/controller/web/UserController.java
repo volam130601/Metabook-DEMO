@@ -12,7 +12,6 @@ import com.metabook.service.user.UserService;
 import com.metabook.util.FileUploadUtil;
 import com.metabook.util.converter.UserConvert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -88,13 +87,18 @@ public class UserController {
         );
     }
 
-    @PostMapping(value = "/change-password", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseObject> changePassword(@ModelAttribute("newPassword") String newPassword) {
-        User user = getUser();
-        user.setPassword(newPassword);
-        userService.changePassword(user);
+    @GetMapping("/change-password")
+    public ResponseEntity<ResponseObject> changePassword(@RequestParam("newPassword") String newPassword) {
+        if (newPassword != null) {
+            User user = userService.findByEmail(getUser().getEmail());
+            user.setPassword(newPassword);
+            userService.changePassword(user);
+            return ResponseEntity.ok(
+                    new ResponseObject(null, "Change password id success", StatusCode.SUCCESS)
+            );
+        }
         return ResponseEntity.ok(
-                new ResponseObject(null, "Change password id success", StatusCode.SUCCESS)
+                new ResponseObject(null, "Change password is incorrect.", StatusCode.FAILED)
         );
     }
 

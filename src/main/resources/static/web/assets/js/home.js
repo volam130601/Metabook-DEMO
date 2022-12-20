@@ -721,41 +721,65 @@ function showStorySlide() {
 
 
 // Change password
-let checkChangePass = true
-
-
+let checkChangePass = false
 const oldPasswordInput = $('#oldPassword')
 const newPasswordInput = $('#newPassword')
 const reNewPasswordInput = $('#reNewPassword')
 
 function saveChangePassword() {
-    if (checkChangePass) {
-        const password = newPasswordInput.val()
-        $.post({
-            url: "/api/user/change-password",
-            data: {newPassword: password},
-            dataType: "json",
-            contentType: "application/json",
-            success: function (res) {
-                if (res.status === "success") {
-                    $('#changePasswordModal').modal('toggle')
-                    $.toast({
-                        text: res.message,
-                        heading: "Message",
-                        icon: "success",
-                        showHideTransition: "slide",
-                        allowToastClose: "true",
-                        hideAfter: "2000",
-                        loader: false,
-                        position: "top-right",
-                        loaderBg: '#ef3a5d'
-                    });
-                }
-            },
-            error: function (e) {
-                console.log(e)
-            }
+    if (oldPasswordInput.val() === "" || newPasswordInput.val() === "" || reNewPasswordInput.val() === "") {
+        $.toast({
+            text: "You haven't enter input yet.",
+            heading: "Message",
+            icon: "warning",
+            showHideTransition: "slide",
+            allowToastClose: "true",
+            hideAfter: "2000",
+            loader: false,
+            position: "top-right",
+            loaderBg: '#ef3a5d'
         });
+    } else {
+        if (checkChangePass) {
+            const password = newPasswordInput.val()
+            $.get({
+                url: "/api/user/change-password",
+                data: {newPassword: password},
+                dataType: "json",
+                contentType: "application/json",
+                success: function (res) {
+                    if (res.status === "success") {
+                        $('#changePasswordModal').modal('toggle')
+                        $.toast({
+                            text: res.message,
+                            heading: "Message",
+                            icon: "success",
+                            showHideTransition: "slide",
+                            allowToastClose: "true",
+                            hideAfter: "2000",
+                            loader: false,
+                            position: "top-right",
+                            loaderBg: '#ef3a5d'
+                        });
+                    } else {
+                        $.toast({
+                            text: res.message,
+                            heading: "Message",
+                            icon: "error",
+                            showHideTransition: "slide",
+                            allowToastClose: "true",
+                            hideAfter: "2000",
+                            loader: false,
+                            position: "top-right",
+                            loaderBg: '#ef3a5d'
+                        });
+                    }
+                },
+                error: function (e) {
+                    console.log(e)
+                }
+            });
+        }
     }
 }
 
