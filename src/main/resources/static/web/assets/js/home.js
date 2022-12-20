@@ -235,7 +235,6 @@ function checkEmailExist(param) {
 }
 
 function sendRegistration(data) {
-    console.log(data)
     $.post({
         url: "/api/v1/registration",
         data: data,

@@ -283,7 +283,7 @@ function postContent() {
         formData.append('file', item)
     });
     $data = []
-    $postText.val("")
+    $('#post-create__input').val('')
     clearImage()
     $.post({
         url: "/api/post/create",
