@@ -13,14 +13,71 @@
               integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
               referrerpolicy="no-referrer" rel="stylesheet"/>
         <!-- CSS Style -->
-        <link href="../static/web/assets/css/style.css" th:href="@{/web/assets/css/style.css}" rel="stylesheet"/>
-        <link href="../static/web/assets/dist/jquery.toast.min.css" th:href="@{/web/assets/dist/jquery.toast.min.css}"
-              rel="stylesheet"/>
+        <link href="../static/web/assets/css/style.css" rel="stylesheet" th:href="@{/web/assets/css/style.css}"/>
+        <link href="../static/web/assets/dist/jquery.toast.min.css" rel="stylesheet"
+              th:href="@{/web/assets/dist/jquery.toast.min.css}"/>
     </th:block>
 </head>
 <body>
 
+<th:block th:fragment="modal-user">
+    <!--  User profile Modal  -->
+    <div aria-hidden="true" aria-labelledby="userProfileModalLabel" class="modal fade" id="userProfileModal"
+         style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
+        <div class="modal-dialog" style="width: 400px; margin-top: 10px; margin-bottom: 10px;">
+            <div class="modal-content" id="modal-account-information">
+            </div>
+        </div>
+    </div>
 
+    <!--  Change password Modal  -->
+    <div aria-hidden="true" aria-labelledby="changePasswordModal" class="modal fade" id="changePasswordModal"
+         style="background-color: rgb(255 255 255 / 60%); " tabindex="-1">
+        <div class="modal-dialog" style="width: 800px; margin-top: 10px; margin-bottom: 10px;">
+            <div class="modal-content">
+                <div class="modal-header bg-meta text-white">
+                    <h5 class="font-weight-bold">Change Password</h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ">
+                    <div class="form-group">
+                        <label class="fs-3 font-weight-bold" for="oldPassword">Old password <b
+                                class="text-danger">*</b></label>
+                        <input aria-describedby="helpId" class="form-control" id="oldPassword" name="oldPassword"
+                               placeholder="Enter old password" type="password">
+                        <small class="form-text text-danger fs-2" id="oldPasswordId"></small>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label class="fs-3 font-weight-bold" for="newPassword">New Password <b
+                                class="text-danger">*</b></label>
+                        <input aria-describedby="newPasswordId" class="form-control" id="newPassword"
+                               name="newPassword"
+                               placeholder="Enter New Password" type="password">
+                        <small class="form-text text-danger fs-2" id="newPasswordId"></small>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="fs-3 font-weight-bold " for="reNewPassword">Repeat new password <b
+                                class="text-danger">*</b></label>
+                        <input aria-describedby="reNewPasswordId" class="form-control" id="reNewPassword"
+                               name="reNewPassword"
+                               placeholder="Enter repeat new password" type="password">
+                        <small class="form-text text-danger fs-2" id="reNewPasswordId"></small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="" id="edit-account-btn">
+                        <button aria-label="Close" class="btn btn-secondary" data-dismiss="modal" type="button">Cancel
+                        </button>
+                        <button class="btn btn-primary ml-2" onclick="saveChangePassword()" type="button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
 <!-- Optional JavaScript -->
 <th:block th:fragment="js-source">
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

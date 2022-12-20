@@ -15,6 +15,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         exposeDirectory("image/story", registry);
         exposeDirectory("image/post", registry);
+        exposeDirectory("image/user", registry);
     }
 
     private void exposeDirectory(String dirName, ResourceHandlerRegistry registry) {

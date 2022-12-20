@@ -42,12 +42,15 @@ $('#share-story').click(function (e) {
                         text: res.message,
                         heading: "Note",
                         icon: "success",
-                        showHideTransition: "plain",
+                        showHideTransition: "slide",
                         allowToastClose: "true",
                         hideAfter: "2000",
                         position: "top-right",
-                        loaderBg: '#ef3a5d'
+                        loader: false
                     });
+                    $('.story-footer').addClass('d-none')
+                    $('#view-story').addClass('d-none')
+                    $('.story-box-main').removeClass('d-none')
                 } else {
                     $.toast({
                         text: res.message,
@@ -57,7 +60,7 @@ $('#share-story').click(function (e) {
                         allowToastClose: "true",
                         hideAfter: "2000",
                         position: "top-right",
-                        loaderBg: '#ef3a5d'
+                        loader: false
                     });
                 }
             },

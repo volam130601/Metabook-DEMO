@@ -1,4 +1,4 @@
-package com.metabook.repository;
+package com.metabook.repository.post;
 
 import com.metabook.entity.post.PostLike;
 import org.springframework.data.jpa.repository.JpaRepository;

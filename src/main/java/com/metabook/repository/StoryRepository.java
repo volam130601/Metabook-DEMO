@@ -11,4 +11,7 @@ public interface StoryRepository extends JpaRepository<Story, Long> {
 
     @Query("select s from Story s ORDER BY s.createAt DESC")
     List<Story> findAllReverse();
+
+
+    List<Story> findByUserId(long userId);
 }

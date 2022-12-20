@@ -2,6 +2,7 @@ package com.metabook.entity.post;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.metabook.entity.User;
+import com.metabook.entity.comment.Comment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,7 +23,9 @@ public class Post implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String content;
     private Date createAt;
-    @OneToMany(mappedBy = "post")
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<PostImage> postImages;
     @ManyToOne
@@ -30,12 +33,18 @@ public class Post implements Serializable {
     @ToString.Exclude
     private User user;
 
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @JsonIgnore
     private List<PostLike> postLikeList;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    private List<Comment> commentList;
+
     @Transient
     private long countLikes;
     @Transient
@@ -48,7 +57,6 @@ public class Post implements Serializable {
 
         Date dateTemp = new Date();
         long subTime = dateTemp.getTime() - createAt.getTime();
-        long seconds = subTime / 1000;
         long minutes = subTime / (60 * 1000);
         long hours = subTime / (60 * 60 * 1000);
         long days = subTime / (24 * 60 * 60 * 1000);
@@ -59,7 +67,7 @@ public class Post implements Serializable {
             return hours + " hours";
         } else if (minutes != 0) {
             return minutes + " minutes";
-        } else return seconds + " seconds";
+        } else return 1 + " minutes";
     }
 
     @Transient

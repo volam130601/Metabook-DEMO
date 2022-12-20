@@ -15,6 +15,13 @@ public interface UserService {
 
     User save(User user);
 
+    User changePassword(User user);
+
     boolean existsUserByEmail(String email);
 
+    List<User> searchByFullName(String fullName);
+
+    User findById(long userId);
+
+    boolean existsByPassword(User user, String password);
 }
