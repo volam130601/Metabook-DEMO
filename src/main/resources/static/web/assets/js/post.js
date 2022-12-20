@@ -49,6 +49,7 @@ function showPostView(page, size) {
                 $data.forEach(function (post) {
                     postImageBody.append(bodyPost(post))
                 });
+
             }
         },
         error: function (e) {
@@ -211,7 +212,7 @@ $('#upload-image-post').change(function (e) {
     $postCreateImage.addClass('d-none')
     $postClose.removeClass('d-none')
     $postControl.removeClass('d-none')
-    const $listPostIMG = $('.post-image__img')
+    const $listPostIMG = $('.post-create__img')
     const file = this.files[0];
     if (file) {
         $data.push(file)
@@ -219,45 +220,45 @@ $('#upload-image-post').change(function (e) {
         reader.onload = function (event) {
             if (countImage == 0) {
                 $postImage.html(`<div class="row m-0 p-0-5px">
-                    <img class="post-image__img" style="height: 250px;" src="${event.target.result}" alt="">
+                    <img class="post-create__img post-image__img" style="height: 250px;" src="${event.target.result}" alt="">
                     </div> `);
             } else if (countImage == 1) {
                 $postImage.html(`<div class="row m-0">
                         <div class="col m-0 p-0-5px">
-                            <img  class="post-image__img" style="height: 200px;" src="${$($listPostIMG[0]).attr('src')}" alt="">
+                            <img  class="post-create__img post-image__img" style="height: 200px;" src="${$($listPostIMG[0]).attr('src')}" alt="">
                         </div>
                         <div class="col m-0 p-0-5px">
-                            <img class="post-image__img" style="height: 200px;" src="${event.target.result}" alt="">
+                            <img class="post-create__img post-image__img" style="height: 200px;" src="${event.target.result}" alt="">
                         </div>
                     </div>`);
             } else if (countImage == 2) {
                 $postImage.html(`
                     <div class="row m-0 p-0-5px">
-                        <img class="post-image__img" style="height: 250px;" src="${$($listPostIMG[0]).attr('src')}" alt="">
+                        <img class="post-create__img post-image__img" style="height: 250px;" src="${$($listPostIMG[0]).attr('src')}" alt="">
                     </div>
                     <div class="row m-0">
                         <div class="col m-0 p-0-5px">
-                            <img  class="post-image__img" style="height: 200px;" src="${$($listPostIMG[1]).attr('src')}" alt="">
+                            <img  class="post-create__img post-image__img" style="height: 200px;" src="${$($listPostIMG[1]).attr('src')}" alt="">
                         </div>
                         <div class="col m-0 p-0-5px">
-                            <img class="post-image__img" style="height: 200px;" src="${event.target.result}" alt="">
+                            <img class="post-create__img post-image__img" style="height: 200px;" src="${event.target.result}" alt="">
                         </div>
                     </div>`);
             } else if (countImage == 3) {
                 $postImage.html(`<div class="row m-0">
                     <div class="col m-0 p-0-5px">
-                        <img  class="post-image__img" style="height: 200px;" src="${$($listPostIMG[0]).attr('src')}" alt="">
+                        <img  class="post-create__img post-image__img" style="height: 200px;" src="${$($listPostIMG[0]).attr('src')}" alt="">
                     </div>
                     <div class="col m-0 p-0-5px">
-                        <img class="post-image__img" style="height: 200px;" src="${$($listPostIMG[1]).attr('src')}" alt="">
+                        <img class="post-create__img post-image__img" style="height: 200px;" src="${$($listPostIMG[1]).attr('src')}" alt="">
                     </div>
                     </div>
                     <div class="row m-0">
                         <div class="col m-0 p-0-5px">
-                            <img class="post-image__img" style="height: 200px;" src="${$($listPostIMG[2]).attr('src')}" alt="">
+                            <img class="post-create__img post-image__img" style="height: 200px;" src="${$($listPostIMG[2]).attr('src')}" alt="">
                         </div>
                         <div class="col m-0 p-0-5px">
-                            <img class="post-image__img" style="height: 200px;" src="${event.target.result}" alt="">
+                            <img class="post-create__img post-image__img" style="height: 200px;" src="${event.target.result}" alt="">
                         </div>
                 </div>`);
             }
@@ -311,6 +312,36 @@ function postContent() {
             console.log(e)
         }
     });
+}
+
+setInterval(renderLikePost, 1000)
+
+function renderLikePost() {
+    const data = $('span[id^="count-like-post-"]')
+    const ids = new Array()
+    for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        let postId = element.id.substring(element.id.lastIndexOf('-') + 1)
+        ids.push(postId)
+    }
+    if (ids.length > 0) {
+        $.post({
+            url: "/api/post/count-like",
+            data: JSON.stringify(ids),
+            dataType: "json",
+            contentType: "application/json",
+            async: false,
+            success: function (res) {
+                res.data.map(item => {
+                    const $likePostSpan = $(`#count-like-post-${item.postId}`)
+                    $likePostSpan.html(item.totalLike)
+                })
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        });
+    }
 }
 
 function likePost(param) {

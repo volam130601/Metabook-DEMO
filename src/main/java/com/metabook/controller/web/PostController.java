@@ -1,5 +1,6 @@
 package com.metabook.controller.web;
 
+import com.metabook.dto.PostLikeDto;
 import com.metabook.dto.ResponseObject;
 import com.metabook.dto.StatusCode;
 import com.metabook.entity.post.Post;
@@ -10,6 +11,7 @@ import com.metabook.service.post.PostLikeService;
 import com.metabook.service.post.PostService;
 import com.metabook.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +107,22 @@ public class PostController {
         }
         return ResponseEntity.ok(
                 new ResponseObject(null, "Like post is failed", StatusCode.FAILED)
+        );
+    }
+
+    @PostMapping(value = "/count-like", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseObject> getCountLikeComment(@RequestBody List<String> ids) {
+        List<PostLikeDto> postLikeDtos = new ArrayList<>();
+        for (String id : ids) {
+            long postId = Long.parseLong(id);
+            postLikeDtos.add(PostLikeDto.builder()
+                    .postId(postId)
+                    .totalLike(postLikeService.countPostLikeByPostId(postId))
+                    .build());
+        }
+        return ResponseEntity.ok(
+                new ResponseObject(postLikeDtos,
+                        "Get post like is Success", StatusCode.SUCCESS)
         );
     }
 
